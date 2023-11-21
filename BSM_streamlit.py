@@ -125,30 +125,6 @@ thetas = [optionTheta(i, K, r, T, sigma, type) for i in spot_prices]
 vegas = [optionVega(i, K, r, T, sigma) for i in spot_prices]
 rhos = [optionRho(i, K, r, T, sigma, type) for i in spot_prices]
 
-# Create DataFrames for each set of data and format the columns
-data_frames = {
-    'Option Price': prices,
-    'Delta': deltas,
-    'Gamma': gammas,
-    'Theta': thetas,
-    'Vega': vegas,
-    'Rho': rhos
-}
-
-# Now, iterate over the dictionary and create a DataFrame for each item
-for name, values in data_frames.items():
-    df = pd.DataFrame({
-        'Underlying Asset Price': spot_prices,
-        name: values
-    })
-
-    # Apply formatting to have 10 decimal places for the specified columns
-    df[name] = df[name].apply(lambda x: f'{x:.10f}')
-
-    # Display each DataFrame in Streamlit
-    st.write(f"{name} Data Table")
-    st.dataframe(df)
-
 sns.set_style("whitegrid")
 
 fig1, ax1 = plt.subplots()
@@ -343,38 +319,30 @@ st.plotly_chart(fig12)
 # Create DataFrames for each set of data
 table1_data = pd.DataFrame({
     'Underlying Asset Price': spot_prices,
-    'Option Price': prices
+    'Option Price': [f"{x:.10f}" for x in prices]
 })
 table2_data = pd.DataFrame({
     'Underlying Asset Price': spot_prices,
-    'Delta': deltas
+    'Delta': [f"{x:.10f}" for x in deltas]
 })
 table3_data = pd.DataFrame({
     'Underlying Asset Price': spot_prices,
-    'Gamma': gammas
+    'Gamma': [f"{x:.10f}" for x in gammas]
 })
 table4_data = pd.DataFrame({
     'Underlying Asset Price': spot_prices,
-    'Theta': thetas
+    'Theta': [f"{x:.10f}" for x in thetas]
 })
 table5_data = pd.DataFrame({
     'Underlying Asset Price': spot_prices,
-    'Vega': vegas
+    'Vega': [f"{x:.10f}" for x in vegas]
 })
 table6_data = pd.DataFrame({
     'Underlying Asset Price': spot_prices,
-    'Rho': rhos
+    'Rho': [f"{x:.10f}" for x in rhos]
 })
 
-# Format the data with the correct number of decimal places
-table1_data = table1_data.round({'Underlying Asset Price': 2, 'Option Price': 10})
-table2_data = table2_data.round({'Underlying Asset Price': 2, 'Delta': 10})
-table3_data = table3_data.round({'Underlying Asset Price': 2, 'Gamma': 10})
-table4_data = table4_data.round({'Underlying Asset Price': 2, 'Theta': 10})
-table5_data = table5_data.round({'Underlying Asset Price': 2, 'Vega': 10})
-table6_data = table6_data.round({'Underlying Asset Price': 2, 'Rho': 10})
-
-# Display DataFrames as tables in Streamlit
+# Display DataFrames as tables in Streamlit with the formatted values
 st.write('Option Price Data Table')
 st.dataframe(table1_data)
 st.write('Delta Data Table')
