@@ -658,24 +658,18 @@ st.download_button(
     mime='text/csv',
 )
 
-# Assuming pnl_data is a dictionary where each key is the strike price and each value is the list of P&L values
-# for the corresponding strike price at different spot prices.
+# Assuming pnl_data is a dictionary with strike prices as keys and lists of P&L values as values
+table_pnl_data = pd.DataFrame({
+    'Underlying Asset Price': spot_prices,
+})
 
-# Transpose the pnl_data to have spot_prices as index and each strike price as a column
-table_pnl_data = pd.DataFrame(pnl_data, index=spot_prices)
+# Add P&L columns to the DataFrame, formatted to two decimal places
+for K, pnl in pnl_data.items():
+    table_pnl_data[f'P&L for Strike {K}'] = [f"{pnl_value:.2f}" for pnl_value in pnl]
 
-# Add the 'Underlying Asset Price' as the first column
-table_pnl_data.insert(0, 'Underlying Asset Price', table_pnl_data.index)
-
-# Reset index to get rid of the automatic index
-table_pnl_data = table_pnl_data.reset_index(drop=True)
-
-# Round the P&L values to a suitable number of decimal places if needed
-table_pnl_data = table_pnl_data.round(2)
-
-# Display the P&L Data Table in Streamlit
+# Display the table in Streamlit
 st.write('P&L Data Table')
-st.dataframe(table_pnl_data.style.set_properties(**{'text-align': 'left'}))
+st.dataframe(table_pnl_data)
 
 # Function to convert the P&L DataFrame to CSV for download
 csv_pnl = convert_df_to_csv(table_pnl_data)
