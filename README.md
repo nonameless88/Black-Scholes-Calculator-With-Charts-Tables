@@ -16,7 +16,7 @@
 This project is a Black-Scholes Options Pricing Calculator for European Options including graphical visualization of the Option Greeks.
 It is a web-hosted interactive application, hosted using [Streamlit's](streamlit.io) Sharing functionality.
 
-The project can be found here: [Link to Project](https://tfsm00-black-scholes-calculator-bsm-streamlit-rm6hsi.streamlit.app/)
+The project can be found here: [Link to Project]([https://tfsm00-black-scholes-calculator-bsm-streamlit-rm6hsi.streamlit.app](https://black-scholes-calculator-with-charts-tables.streamlit.app/)/)
 
 ## Black-Scholes Model
 
@@ -70,7 +70,7 @@ Formula Images: [Macroption](https://www.macroption.com/black-scholes-formula/)
 ## Issues and Suggestions
 
 
-If you encounter an error in the program, a way to make code faster, any wrong application of financial formulas and concepts or just want to make a suggestion on how to make this project better raise a new issue [here](https://github.com/TFSM00/Black-Scholes-Calculator/issues/new/choose). 
+If you encounter an error in the program, a way to make code faster, any wrong application of financial formulas and concepts or just want to make a suggestion on how to make this forked project better raise a new issue [here](https://github.com/nonameless88/Black-Scholes-Calculator-With-Charts-Tables/). 
 
 ## 📝 Licence
 
