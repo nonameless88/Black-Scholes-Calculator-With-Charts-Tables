@@ -188,6 +188,13 @@ st.markdown("<h6>Modified for ETH price and Deribit Options (Slightly different 
 st.markdown("<h3 align='center'>Option Prices and Greeks</h3>", unsafe_allow_html=True)
 st.header("")
 
+# Extract the specific values for the current underlying asset price
+call_price = blackScholes(S, K, r, T, sigma, type="c")
+put_price = blackScholes(S, K, r, T, sigma, type="p")
+delta = optionDelta(S, K, r, T, sigma, type)
+gamma = optionGamma(S, K, r, T, sigma)
+theta = optionTheta(S, K, r, T, sigma, type)
+
 # First row of metrics
 col1, col2, col3, col4, col5, col6 = st.columns(6)
 col1.metric("Call Price", str(blackScholes(S, K, r, T, sigma, type="c")))
