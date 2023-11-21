@@ -137,7 +137,7 @@ ax1.set_xlabel("Underlying Asset Price")
 ax1.set_title("Option Price")
 
 fig_bep, ax_bep = plt.subplots()
-ax_bep.plot(spot_prices, break_even_price, marker='o', color='orange')
+ax_bep.plot(spot_prices, break_even_price, color='green')
 ax_bep.set_title('Break Even Price')
 ax_bep.set_xlabel('Underlying Asset Price')
 ax_bep.set_ylabel('Break Even Price')
