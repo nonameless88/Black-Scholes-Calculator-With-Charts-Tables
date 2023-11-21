@@ -125,7 +125,7 @@ fig1, ax1 = plt.subplots()
 sns.lineplot(x=spot_prices, y=prices)
 ax1.set_ylabel('Call Option Price')
 ax1.set_xlabel("Underlying Asset Price")
-ax1.set_title("Option Price")
+ax1.set_title("Call Option Price")
 
 fig2, ax2 = plt.subplots()
 sns.lineplot(x=spot_prices, y=deltas)
@@ -207,13 +207,13 @@ option_price_trace = go.Scatter(
 layout = go.Layout(
     title='Call Option Price Interactive Chart',
     xaxis=dict(title='Underlying Asset Price'),
-    yaxis=dict(title='Option Price'),
+    yaxis=dict(title='Call Option Price'),
     hovermode='closest'
 )
 
 # Create the figure with the trace and layout
-fig7 = go.Figure(data=[option_price_trace], layout=layout)
+fig8 = go.Figure(data=[option_price_trace], layout=layout)
 
 # Display the figure in the Streamlit app
-st.plotly_chart(fig7)
+st.plotly_chart(fig8)
 
