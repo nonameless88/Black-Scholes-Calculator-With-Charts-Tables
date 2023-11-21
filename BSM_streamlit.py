@@ -1,4 +1,3 @@
-st.set_page_config(page_title="Black-Scholes Model", layout="wide")
 import pandas as pd
 import plotly.graph_objs as go
 import numpy as np
