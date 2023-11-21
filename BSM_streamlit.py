@@ -249,7 +249,7 @@ bep_trace = go.Scatter(
     mode='lines+markers',
     name='Break Even Price',
     hoverinfo='text'
-    hovertemplate='<i>Underlying Asset Price</i>: %{x:.2f}'+ \
+    hovertemplate='<i>Underlying Asset Price</i>: %{x:.2f}'+
                   '<br><b>Break Even Price</b>: %{y:.10f}<extra></extra>',
 )
 fig_bep_interactive = go.Figure(data=[bep_trace], layout=go.Layout(
