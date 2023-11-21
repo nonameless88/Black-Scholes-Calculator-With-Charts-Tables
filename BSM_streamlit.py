@@ -187,23 +187,27 @@ st.header("")
 st.markdown("<h6>Modified for ETH price and Deribit Options (Slightly different from Deribit Option Pricer due to lack of Rho). T value is also different, don't know how they get that T value lol. Example of Deribit's Option Pricer data with Time to Expiry (01 Dec 2023): 9d 21h 26m (Weekly): <a href='https://pasteboard.co/2pFIp5OryStz.png'>https://pasteboard.co/2pFIp5OryStz.png</a></h6> So for call option price, it's $2 less expensive than calculation using this tool due to lower T value (and maybe Rho, who knows lol). Feedback are more than welcome, please create a Github Issue for feedback. See project's description and assumptions here: <a href='github.com/nonameless88/Black-Scholes-Calculator-With-Charts-Tables/'>github.com/nonameless88/Black-Scholes-Calculator-With-Charts-Tables/</a></h6>", unsafe_allow_html=True)
 st.markdown("<h3 align='center'>Option Prices and Greeks</h3>", unsafe_allow_html=True)
 st.header("")
-col1, col2, col3, col4, col5, col6 = st.columns(6)
-col2.metric("Call Price", str(round(blackScholes(S, K, r, T, sigma,type="c"),4)))
-col4.metric("Put Price", str(round(blackScholes(S, K, r, T, sigma,type="p"),4)))
 
-# Assuming break_even_price is a list of values for each spot price, we take the last one
-# This assumes the user's input for S (current spot price) is the last in the list
-break_even_price_value = break_even_price[-1]
+def human_readable(number):
+    return f"{number:.5f}" if number < 0.01 else f"{number:.2f}"
+# Create an expander to show the details of option prices and Greeks
+with st.expander("Option Prices and Greeks"):
+    col1, col2, col3, col4, col5 = st.columns(5)
+    col1.metric("Call Price", human_readable(blackScholes(S, K, r, T, sigma, type="c")))
+    col2.metric("Put Price", human_readable(blackScholes(S, K, r, T, sigma, type="p")))
+    col3.metric("Delta", human_readable(optionDelta(S, K, r, T, sigma, type)))
+    col4.metric("Gamma", human_readable(optionGamma(S, K, r, T, sigma)))
+    col5.metric("Theta", human_readable(optionTheta(S, K, r, T, sigma, type)))
 
-bcol1, bcol2, bcol3, bcol4, bcol5, bcol6 = st.columns(6)
-# Add the Break Even Price metric in the new sixth column
-label_bep = "Call Option Break Even Price" if type_input == "Call" else "Put Option Break Even Price"
-bcol6.metric(label_bep, f"{break_even_price_value:.2f}")
-bcol1.metric("Delta", str(round(blackScholes(S, K, r, T, sigma,type="c"), 4)))
-bcol2.metric("Gamma", str(round(optionGamma(S, K, r, T, sigma), 4)))
-bcol3.metric("Theta", str(round(optionTheta(S, K, r, T, sigma,type="c"), 4)))
-bcol4.metric("Vega", str(round(optionVega(S, K, r, T, sigma), 4)))
-bcol5.metric("Rho", str(round(optionRho(S, K, r, T, sigma,type="c"), 4)))
+    # Assuming break_even_price is calculated correctly and is a list of values
+    break_even_price_value = break_even_price[-1]  # Gets the last value of the list
+    label_bep = "Call Option Break Even Price" if type_input == "Call" else "Put Option Break Even Price"
+    st.metric(label_bep, human_readable(break_even_price_value))
+
+    col1, col2, col3 = st.columns(3)
+    col1.metric("Vega", human_readable(optionVega(S, K, r, T, sigma)))
+    col2.metric("Rho", human_readable(optionRho(S, K, r, T, sigma, type)))
+    col3.metric("Break Even Price", human_readable(break_even_price_value))
 
 st.header("")
 st.markdown("<h3 align='center'>Visualization of the Greeks</h3>", unsafe_allow_html=True)
