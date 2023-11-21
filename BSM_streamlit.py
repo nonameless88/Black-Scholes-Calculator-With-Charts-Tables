@@ -196,13 +196,14 @@ gamma = optionGamma(S, K, r, T, sigma)
 theta = optionTheta(S, K, r, T, sigma, type)
 vega = optionVega(S, K, r, T, sigma)
 rho = optionRho(S, K, r, T, sigma, type)
-break_even_price = K + p if type == "c" else K - p for p in prices
+# Calculate break_even_price based on the type
+break_even_price = [K + p if type == "c" else K - p for p in prices]
 
 # First row of metrics
 col1, col2, col3, col4, col5, col6 = st.columns(6)
 col1.metric("Call Price", f"{call_price:.2f}")
 col2.metric("Put Price", f"{put_price:.2f}")
-col2.metric("Break Even Price For Chosen Type", f"{break_even_price:.2f}")
+col2.metric("Break Even Price For Chosen Type", f"{break_even_price[-1]:.2f}")
 
 # Second row of metrics
 col1, col2, col3, col4, col5, col6 = st.columns(6)
