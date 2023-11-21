@@ -1,10 +1,3 @@
-st.set_page_config(page_title="Black-Scholes Model", layout="wide")
-# Custom CSS to ensure tables take up the maximum available width
-st.markdown("""
-<style>
-.css-1l02zno {max-width:100% !important;}
-</style>
-""", unsafe_allow_html=True)
 import pandas as pd
 import plotly.graph_objs as go
 import numpy as np
@@ -13,7 +6,8 @@ import matplotlib.pyplot as plt
 import streamlit as st
 import seaborn as sns
 import streamlit.components.v1 as components
-
+# Must be the first Streamlit command used
+st.set_page_config(page_title="Black-Scholes Model", layout="wide")
 def blackScholes(S, K, r, T, sigma, type="c"):
     "Calculate Black Scholes option price for a call/put"
     d1 = (np.log(S/K) + (r + sigma**2/2)* T)/(sigma*np.sqrt(T))
