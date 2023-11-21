@@ -113,7 +113,7 @@ elif type_input=="Put":
 total_days_to_expiry = days_to_expiry + hours_to_expiry / 24 + minutes_to_expiry / (24 * 60)
 T = total_days_to_expiry/365
 
-st.sidebar.text(f"Time to Expiry (in years): T={T:.5f}")
+st.sidebar.text(f"Time to Expiry (years): T={T:.5f}")
 st.sidebar.text(f"Volatility (in percent): {sigma * 100:.2f}%")
 
 spot_prices = [i for i in range(0, int(S)+50 + 1)]
