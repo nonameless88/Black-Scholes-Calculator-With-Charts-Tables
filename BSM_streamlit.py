@@ -4,13 +4,13 @@ import numpy as np
 from scipy.stats import norm
 import matplotlib.pyplot as plt
 import streamlit as st
-import seaborn as sns
-import streamlit.components.v1 as components
 # Set the page config to customize the title and layout
 st.set_page_config(page_title="Black-Scholes Calculator with charts and tables",
                    page_icon=None,
                    layout='centered',
                    initial_sidebar_state='auto')
+import seaborn as sns
+import streamlit.components.v1 as components
 
 def blackScholes(S, K, r, T, sigma, type="c"):
     "Calculate Black Scholes option price for a call/put"
