@@ -367,44 +367,6 @@ tr:hover {
 </style>
 """, unsafe_allow_html=True)
 
-# Display the final table first
-st.write('Final Data Table')
-st.dataframe(tablefinal_data.style.set_properties(**{'text-align': 'left'}))
-
-# Display DataFrames as tables in Streamlit with the formatted values
-st.write('Option Price Data Table')
-st.dataframe(table1_data.style.set_properties(**{'text-align': 'left'}))
-st.write('Delta Data Table')
-st.dataframe(table2_data.style.set_properties(**{'text-align': 'left'}))
-st.write('Gamma Data Table')
-st.dataframe(table3_data.style.set_properties(**{'text-align': 'left'}))
-st.write('Theta Data Table')
-st.dataframe(table4_data.style.set_properties(**{'text-align': 'left'}))
-st.write('Vega Data Table')
-st.dataframe(table5_data.style.set_properties(**{'text-align': 'left'}))
-st.write('Rho Data Table')
-st.dataframe(table6_data.style.set_properties(**{'text-align': 'left'}))
-
-# Custom CSS to inject into Streamlit's HTML to adjust table styling
-st.markdown("""
-<style>
-table {
-    width: 100%;
-}
-th {
-    text-align: left;
-}
-th, td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-tr:hover {
-    background-color: #f5f5f5;
-}
-</style>
-""", unsafe_allow_html=True)
-
 # Concatenate all the tables by the 'Underlying Asset Price' column
 tablefinal_data = pd.concat(
     [table1_data.set_index('Underlying Asset Price'),
@@ -418,4 +380,20 @@ tablefinal_data = pd.concat(
 # Reset index so 'Underlying Asset Price' becomes a column again
 tablefinal_data = tablefinal_data.reset_index()
 
+# Display the final table 
+st.write('Final Data Table')
+st.dataframe(tablefinal_data.style.set_properties(**{'text-align': 'left'}))
 
+# Now display the other DataFrames as tables in Streamlit with the formatted values
+st.write('Option Price Data Table')
+st.dataframe(table1_data.style.set_properties(**{'text-align': 'left'}))
+st.write('Delta Data Table')
+st.dataframe(table2_data.style.set_properties(**{'text-align': 'left'}))
+st.write('Gamma Data Table')
+st.dataframe(table3_data.style.set_properties(**{'text-align': 'left'}))
+st.write('Theta Data Table')
+st.dataframe(table4_data.style.set_properties(**{'text-align': 'left'}))
+st.write('Vega Data Table')
+st.dataframe(table5_data.style.set_properties(**{'text-align': 'left'}))
+st.write('Rho Data Table')
+st.dataframe(table6_data.style.set_properties(**{'text-align': 'left'}))
