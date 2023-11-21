@@ -119,6 +119,9 @@ st.sidebar.text(f"Volatility (in percent): {sigma * 100:.2f}%")
 spot_prices = [i for i in range(0, int(S)+50 + 1)]
 
 prices = [blackScholes(i, K, r, T, sigma, type) for i in spot_prices]
+# New code block: Calculate BEP and insert new Matplotlib and Plotly charts for BEP here
+# Insert the BEP calculation code here
+break_even_price = [K + p if type == "c" else K - p for p in prices]
 deltas = [optionDelta(i, K, r, T, sigma, type) for i in spot_prices]
 gammas = [optionGamma(i, K, r, T, sigma) for i in spot_prices]
 thetas = [optionTheta(i, K, r, T, sigma, type) for i in spot_prices]
@@ -132,6 +135,12 @@ sns.lineplot(x=spot_prices, y=prices)
 ax1.set_ylabel('Option Price')
 ax1.set_xlabel("Underlying Asset Price")
 ax1.set_title("Option Price")
+
+fig_bep, ax_bep = plt.subplots()
+ax_bep.plot(spot_prices, break_even_price, marker='o', color='orange')
+ax_bep.set_title('Break Even Price')
+ax_bep.set_xlabel('Underlying Asset Price')
+ax_bep.set_ylabel('Break Even Price')
 
 fig2, ax2 = plt.subplots()
 sns.lineplot(x=spot_prices, y=deltas)
@@ -164,6 +173,7 @@ ax6.set_xlabel("Underlying Asset Price")
 ax6.set_title("Rho")
 
 fig1.tight_layout()
+figbep.tight_layout()
 fig2.tight_layout()
 fig3.tight_layout()
 fig4.tight_layout()
@@ -192,6 +202,7 @@ st.header("")
 st.markdown("<h3 align='center'>Visualization of the Greeks</h3>", unsafe_allow_html=True)
 st.header("")
 st.pyplot(fig1)
+st.pyplot(fig_bep)
 st.pyplot(fig2)
 st.pyplot(fig3)
 st.pyplot(fig4)
@@ -223,6 +234,22 @@ fig7 = go.Figure(data=[option_price_trace], layout=layout)
 
 # Display the figure in the Streamlit app
 st.plotly_chart(fig7)
+
+# Insert Interactive Chart using Plotly for Break Even Price Here
+bep_trace = go.Scatter(
+    x=spot_prices,
+    y=break_even_price,
+    mode='lines+markers',
+    name='Break Even Price',
+    hoverinfo='x+y'
+)
+fig_bep_interactive = go.Figure(data=[bep_trace], layout=go.Layout(
+    title='Break Even Price Interactive Chart',
+    xaxis=dict(title='Underlying Asset Price'),
+    yaxis=dict(title='Break Even Price'),
+    hovermode='closest'
+))
+st.plotly_chart(fig_bep_interactive)
 
 # Delta Chart
 delta_trace = go.Scatter(
@@ -321,6 +348,11 @@ table1_data = pd.DataFrame({
     'Underlying Asset Price': spot_prices,
     'Option Price': [f"{x:.10f}" for x in prices]
 })
+# Insert Data Table for Break Even Price Here
+table_bep_data = pd.DataFrame({
+    'Underlying Asset Price': spot_prices,
+    'Break Even Price': break_even_price
+})
 table2_data = pd.DataFrame({
     'Underlying Asset Price': spot_prices,
     'Delta': [f"{x:.10f}" for x in deltas]
@@ -371,6 +403,7 @@ tr:hover {
 # Concatenate all the tables by the 'Underlying Asset Price' column
 tablefinal_data = pd.concat(
     [table1_data.set_index('Underlying Asset Price'),
+     table_bep_data.set_index('Underlying Asset Price'),
      table2_data.set_index('Underlying Asset Price'),
      table3_data.set_index('Underlying Asset Price'),
      table4_data.set_index('Underlying Asset Price'),
@@ -388,6 +421,8 @@ st.dataframe(tablefinal_data.style.set_properties(**{'text-align': 'left'}))
 # Now display the other DataFrames as tables in Streamlit with the formatted values
 st.write('Option Price Data Table')
 st.dataframe(table1_data.style.set_properties(**{'text-align': 'left'}))
+st.write('Break Even Price Data Table')
+st.dataframe(table_bep_data)
 st.write('Delta Data Table')
 st.dataframe(table2_data.style.set_properties(**{'text-align': 'left'}))
 st.write('Gamma Data Table')
@@ -416,6 +451,16 @@ st.download_button(
     file_name=f'Option_Price_Data_Table_{option_type}_{strike_price:.0f}.csv',
     mime='text/csv',
 )
+
+# Export CSV Button for Break Even Price Data Table
+csv = convert_df_to_csv(table_bep_data)
+st.download_button(
+    label="Export Break Even Price Data Table as CSV",
+    data=csv,
+    file_name=f'Break_Even_Price_Data_Table_{type_input}_{K:.2f}.csv',
+    mime='text/csv',
+)
+
 # Export CSV buttons for Delta Data Table
 csv = convert_df_to_csv(table2_data)
 st.download_button(
