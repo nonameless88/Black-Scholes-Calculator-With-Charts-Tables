@@ -203,6 +203,8 @@ break_even_price = [K + p if type == "c" else K - p for p in prices]
 col1, col2, col3, col4, col5, col6 = st.columns(6)
 col1.metric("Call Price", f"{call_price:.2f}")
 col2.metric("Put Price", f"{put_price:.2f}")
+
+col1, col2, col3, col4, col5, col6 = st.columns(6)
 col2.metric("Break Even Price For Chosen Type", f"{break_even_price[-1]:.2f}")
 
 # Second row of metrics
