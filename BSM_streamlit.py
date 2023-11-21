@@ -203,9 +203,7 @@ break_even_price = [K + p if type == "c" else K - p for p in prices]
 col1, col2, col3, col4, col5, col6 = st.columns(6)
 col1.metric("Call Price", f"{call_price:.2f}")
 col2.metric("Put Price", f"{put_price:.2f}")
-
-col1, col2, col3, col4, col5, col6 = st.columns(6)
-col1.metric("Break Even Price", f"{break_even_price[-1]:.2f}")
+col3.metric("Break Even Price", f"{break_even_price[-1]:.2f}")
 
 # Second row of metrics
 col1, col2, col3, col4, col5, col6 = st.columns(6)
@@ -270,7 +268,7 @@ bep_trace = go.Scatter(
     hovertemplate=(
         '<i>Underlying Asset Price</i>: %{x:.2f}' +
         '<br><b>Break Even Price</b>: %{y:.2f}' +
-        '<br><b>Strike Price</b>: {K:.2f}<extra></extra>'# Custom hover text
+        '<br><b>Strike Price</b>: ' + str(K) + '<extra></extra>'# Custom hover text
     )
 )
 fig_bep_interactive = go.Figure(data=[bep_trace], layout=go.Layout(
