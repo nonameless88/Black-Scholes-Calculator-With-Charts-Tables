@@ -145,6 +145,7 @@ rhos = [optionRho(i, K, r, T, sigma, type) for i in spot_prices]
 # Add this after you've defined the central strike price 'K'
 central_strike = K  # This is your central strike price
 strike_prices = [central_strike + i * strike_price_step for i in range(-5, 5)]  # Generates a list of strike prices centered around the central_strike
+pnl_data = calculate_pnl(spot_prices, strike_prices, type)
 
 #------------------------------------#
 #Test creating plotly chart for PNL at 11 strike price
