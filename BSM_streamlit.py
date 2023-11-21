@@ -363,4 +363,19 @@ st.write('Vega Data Table')
 st.dataframe(table5_data)
 st.write('Rho Data Table')
 st.dataframe(table6_data)
+# Concatenate all the tables by the 'Underlying Asset Price' column
+tablefinal_data = pd.concat(
+    [table1_data.set_index('Underlying Asset Price'),
+     table2_data.set_index('Underlying Asset Price'),
+     table3_data.set_index('Underlying Asset Price'),
+     table4_data.set_index('Underlying Asset Price'),
+     table5_data.set_index('Underlying Asset Price'),
+     table6_data.set_index('Underlying Asset Price')],
+    axis=1)
 
+# Reset index so 'Underlying Asset Price' becomes a column again
+tablefinal_data = tablefinal_data.reset_index()
+
+# Display the final table
+st.write('Final Data Table')
+st.dataframe(tablefinal_data)
