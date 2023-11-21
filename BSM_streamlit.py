@@ -212,8 +212,8 @@ layout = go.Layout(
 )
 
 # Create the figure with the trace and layout
-fig1 = go.Figure(data=[option_price_trace], layout=layout)
+fig7 = go.Figure(data=[option_price_trace], layout=layout)
 
 # Display the figure in the Streamlit app
-st.plotly_chart(fig1)
+st.plotly_chart(fig7)
 
