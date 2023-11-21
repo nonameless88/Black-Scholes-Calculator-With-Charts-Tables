@@ -177,7 +177,7 @@ for K, pnl in pnl_data.items():
         text=[f'Strike Price: {K}<br>Underlying Price: {s}<br>Option Price: {op:.2f}<br>PnL: {pnl:.2f}' 
               for s, op, pnl in zip(spot_prices, option_prices, pnl_data)],
         hovertemplate='%{text}<extra></extra>',
-        ))
+)
         
 # Create the figure with the collected traces
 fig_pnl = go.Figure(data=pnl_traces, layout=go.Layout(
