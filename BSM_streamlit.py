@@ -203,8 +203,8 @@ option_price_trace = go.Scatter(
     mode='lines+markers',
     name='Option Price',
     hoverinfo='text',  # Change to 'text' to use custom text
-    hovertemplate='<i>Underlying Asset Price</i>: %{x:.10f}'+
-                  '<br><b>Option Price</b>: %{y:.2f}<extra></extra>',  # Custom hover text
+    hovertemplate='<i>Underlying Asset Price</i>: %{x:.2f}'+
+                  '<br><b>Option Price</b>: %{y:.10f}<extra></extra>',  # Custom hover text
 )
 
 # Create the layout for the chart
@@ -228,8 +228,8 @@ delta_trace = go.Scatter(
     mode='lines+markers',
     name='Delta',
     hoverinfo='text',
-    hovertemplate='<i>Underlying Asset Price</i>: %{x:.10f}'+
-                  '<br><b>Delta</b>: %{y:.2f}<extra></extra>',
+    hovertemplate='<i>Underlying Asset Price</i>: %{x:.2f}'+
+                  '<br><b>Delta</b>: %{y:.10f}<extra></extra>',
 )
 fig8 = go.Figure(data=[delta_trace], layout=go.Layout(
     title='Delta Interactive Chart',
@@ -246,8 +246,8 @@ gamma_trace = go.Scatter(
     mode='lines+markers',
     name='Gamma',
     hoverinfo='text',
-    hovertemplate='<i>Underlying Asset Price</i>: %{x:.10f}'+
-                  '<br><b>Gamma</b>: %{y:.2f}<extra></extra>',
+    hovertemplate='<i>Underlying Asset Price</i>: %{x:.2f}'+
+                  '<br><b>Gamma</b>: %{y:.10f}<extra></extra>',
 )
 fig9 = go.Figure(data=[gamma_trace], layout=go.Layout(
     title='Gamma Interactive Chart',
@@ -264,8 +264,8 @@ theta_trace = go.Scatter(
     mode='lines+markers',
     name='Theta',
     hoverinfo='text',
-    hovertemplate='<i>Underlying Asset Price</i>: %{x:.10f}'+
-                  '<br><b>Theta</b>: %{y:.2f}<extra></extra>',
+    hovertemplate='<i>Underlying Asset Price</i>: %{x:.2f}'+
+                  '<br><b>Theta</b>: %{y:.10f}<extra></extra>',
 )
 fig10 = go.Figure(data=[theta_trace], layout=go.Layout(
     title='Theta Interactive Chart',
@@ -282,8 +282,8 @@ vega_trace = go.Scatter(
     mode='lines+markers',
     name='Vega',
     hoverinfo='text',
-    hovertemplate='<i>Underlying Asset Price</i>: %{x:.10f}'+
-                  '<br><b>Vega</b>: %{y:.2f}<extra></extra>',
+    hovertemplate='<i>Underlying Asset Price</i>: %{x:.2f}'+
+                  '<br><b>Vega</b>: %{y:.10f}<extra></extra>',
 )
 fig11 = go.Figure(data=[vega_trace], layout=go.Layout(
     title='Vega Interactive Chart',
@@ -300,8 +300,8 @@ rho_trace = go.Scatter(
     mode='lines+markers',
     name='Rho',
     hoverinfo='text',
-    hovertemplate='<i>Underlying Asset Price</i>: %{x:.10f}'+
-                  '<br><b>Rho</b>: %{y:.2f}<extra></extra>',
+    hovertemplate='<i>Underlying Asset Price</i>: %{x:.2f}'+
+                  '<br><b>Rho</b>: %{y:.10f}<extra></extra>',
 )
 fig12 = go.Figure(data=[rho_trace], layout=go.Layout(
     title='Rho Interactive Chart',
