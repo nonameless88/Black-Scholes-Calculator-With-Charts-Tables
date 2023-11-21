@@ -188,15 +188,22 @@ st.markdown("<h6>Modified for ETH price and Deribit Options (Slightly different 
 st.markdown("<h3 align='center'>Option Prices and Greeks</h3>", unsafe_allow_html=True)
 st.header("")
 col1, col2, col3, col4, col5 = st.columns(5)
-col2.metric("Call Price", str(round(blackScholes(S, K, r, T, sigma,type="c"), 3)))
-col4.metric("Put Price", str(round(blackScholes(S, K, r, T, sigma,type="p"), 3)))
+col2.metric("Call Price", str(round(blackScholes(S, K, r, T, sigma,type="c"), 5)))
+col4.metric("Put Price", str(round(blackScholes(S, K, r, T, sigma,type="p"), 5)))
 
-bcol1, bcol2, bcol3, bcol4, bcol5 = st.columns(5)
-bcol1.metric("Delta", str(round(blackScholes(S, K, r, T, sigma,type="c"), 3)))
-bcol2.metric("Gamma", str(round(optionGamma(S, K, r, T, sigma), 3)))
-bcol3.metric("Theta", str(round(optionTheta(S, K, r, T, sigma,type="c"), 3)))
-bcol4.metric("Vega", str(round(optionVega(S, K, r, T, sigma), 3)))
-bcol5.metric("Rho", str(round(optionRho(S, K, r, T, sigma,type="c"), 3)))
+# Assuming break_even_price is a list of values for each spot price, we take the last one
+# This assumes the user's input for S (current spot price) is the last in the list
+break_even_price_value = break_even_price[-1]
+
+bcol1, bcol2, bcol3, bcol4, bcol5, bcol6 = st.columns(6)
+# Add the Break Even Price metric in the new sixth column
+label_bep = "Call Option Break Even Price" if type_input == "Call" else "Put Option Break Even Price"
+bcol6.metric(label_bep, f"{break_even_price_value:.2f}")
+bcol1.metric("Delta", str(round(blackScholes(S, K, r, T, sigma,type="c"), 5)))
+bcol2.metric("Gamma", str(round(optionGamma(S, K, r, T, sigma), 5)))
+bcol3.metric("Theta", str(round(optionTheta(S, K, r, T, sigma,type="c"), 5)))
+bcol4.metric("Vega", str(round(optionVega(S, K, r, T, sigma), 5)))
+bcol5.metric("Rho", str(round(optionRho(S, K, r, T, sigma,type="c"), 5)))
 
 st.header("")
 st.markdown("<h3 align='center'>Visualization of the Greeks</h3>", unsafe_allow_html=True)
@@ -242,6 +249,8 @@ bep_trace = go.Scatter(
     mode='lines+markers',
     name='Break Even Price',
     hoverinfo='x+y'
+    hovertemplate='<i>Underlying Asset Price</i>: %{x:.2f}'+
+                  '<br><b>Break Even Price</b>: %{y:.10f}<extra></extra>',
 )
 fig_bep_interactive = go.Figure(data=[bep_trace], layout=go.Layout(
     title='Break Even Price Interactive Chart',
