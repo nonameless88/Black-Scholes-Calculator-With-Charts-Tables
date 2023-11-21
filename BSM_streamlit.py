@@ -402,52 +402,59 @@ st.dataframe(table6_data.style.set_properties(**{'text-align': 'left'}))
 def convert_df_to_csv(df):
     return df.to_csv(index=False).encode('utf-8')
 
-# Export CSV buttons for each table
+# Capture the option type and strike price inputs
+option_type = type_input  # Assuming this is the variable holding the option type selected by the user
+strike_price = K  # Assuming this is the variable holding the strike price entered by the user
+
+# Export CSV buttons for each table to include the option type and strike price
+# Export CSV buttons for Option Price Data Table
 csv = convert_df_to_csv(table1_data)
 st.download_button(
     label="Export Option Price Data Table as CSV",
     data=csv,
-    file_name='Option_Price_Data_Table.csv',
+    file_name=f'Option_Price_Data_Table_{option_type}_{strike_price:.0f}.csv',
     mime='text/csv',
 )
-
+# Export CSV buttons for Delta Data Table
 csv = convert_df_to_csv(table2_data)
 st.download_button(
     label="Export Delta Data Table as CSV",
     data=csv,
-    file_name='Delta_Data_Table.csv',
+    file_name=f'Delta_Data_Table_{option_type}_{strike_price:.0f}.csv',
     mime='text/csv',
 )
-
+# Export CSV buttons for Gamma Data Table
 csv = convert_df_to_csv(table3_data)
 st.download_button(
     label="Export Gamma Data Table as CSV",
     data=csv,
-    file_name='Gamma_Data_Table.csv',
+    file_name=f'Gamma_Data_Table_{option_type}_{strike_price:.0f}.csv',
     mime='text/csv',
 )
-
+# Export CSV buttons for Theta Data Table
 csv = convert_df_to_csv(table4_data)
 st.download_button(
     label="Export Theta Data Table as CSV",
     data=csv,
-    file_name='Theta_Data_Table.csv',
+    file_name=f'Theta_Data_Table_{option_type}_{strike_price:.0f}.csv',
     mime='text/csv',
 )
 
+# Export CSV buttons for Vega Data Table
 csv = convert_df_to_csv(table5_data)
 st.download_button(
     label="Export Vega Data Table as CSV",
     data=csv,
-    file_name='Vega_Data_Table.csv',
+    file_name=f'Vega_Data_Table_{option_type}_{strike_price:.0f}.csv',
     mime='text/csv',
 )
 
+# Export CSV buttons for Rho Data Table
 csv = convert_df_to_csv(table6_data)
 st.download_button(
     label="Export Rho Data Table as CSV",
     data=csv,
-    file_name='Rho_Data_Table.csv',
+    file_name=f'Rho_Data_Table_{option_type}_{strike_price:.0f}.csv',
     mime='text/csv',
 )
 
@@ -456,6 +463,6 @@ csv = convert_df_to_csv(tablefinal_data)
 st.download_button(
     label="Export Final Data Table as CSV",
     data=csv,
-    file_name='Final_Data_Table.csv',
+    file_name=f'Final_Data_Table_{option_type}_{strike_price:.0f}.csv',
     mime='text/csv',
 )
