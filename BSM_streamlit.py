@@ -98,10 +98,10 @@ def calculate_pnl(initial_price, Ks, r, T, sigma, type="c"):
         # Then calculate P&L for all spot prices
         if type == "c":
             # For a call option, the P&L is Current Asset Price - Strike Price - option_price_at_purchase
-            pnl[K] = [i - K - option_price_at_purchase if i - K > option_price_at_purchase else -option_price_at_purchase for i in spot_prices]
+            pnl[K] = S - K - option_price_at_purchase if S - K > option_price_at_purchase else -option_price_at_purchase 
         elif type == "p":
             # For a put option, the P&L is Strike Price - Current Asset Price - option_price_at_purchase
-            pnl[K] = [K - i - option_price_at_purchase if K - i > option_price_at_purchase else -option_price_at_purchase for i in spot_prices]
+            pnl[K] = K - S - option_price_at_purchase if K - i > option_price_at_purchase else -option_price_at_purchase 
 
     return pnl
 
