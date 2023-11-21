@@ -92,12 +92,19 @@ def optionRho(S, K, r, T, sigma, type="c"):
 def calculate_pnl(S, Ks, r, T, sigma, type="c"):
     pnl = {}
     for K in Ks:
-        option_prices = [blackScholes(Si, K, r, T, sigma, type) for Si in spot_prices]
+        # Calculate option price only once for the given K, since it's the premium paid
+        option_price_at_purchase = blackScholes(S, K, r, T, sigma, type)
+
+        # Then calculate P&L for all spot prices
         if type == "c":
-            pnl[K] = [max(Si - K, 0) - op for Si, op in zip(spot_prices, option_prices)]
+            # For a call option, the P&L is max(Si - K - option_price_at_purchase, -option_price_at_purchase)
+            pnl[K] = [max(Si - K - option_price_at_purchase, -option_price_at_purchase) for Si in spot_prices]
         elif type == "p":
-            pnl[K] = [max(K - Si, 0) - op for Si, op in zip(spot_prices, option_prices)]
+            # For a put option, the P&L is max(K - Si - option_price_at_purchase, -option_price_at_purchase)
+            pnl[K] = [max(K - Si - option_price_at_purchase, -option_price_at_purchase) for Si in spot_prices]
+
     return pnl
+
 
 st.set_page_config(page_title="Black-Scholes Calculator with charts and tables")
 
