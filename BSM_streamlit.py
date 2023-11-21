@@ -154,7 +154,7 @@ st.sidebar.text(f"Volatility (in percent): {sigma * 100:.2f}%")
 spot_prices = [i for i in range(0, int(S)+50 + 1)]
 
 # Calculate P&L for each strike price
-pnl_data = calculate_pnl(S, strike_prices, r, T, sigma, type)
+pnl_data = [calculate_pnl(i, strike_prices, r, T, sigma, type) for i in spot_prices]
 
 prices = [blackScholes(i, K, r, T, sigma, type) for i in spot_prices]
 # New code block: Calculate BEP and insert new Matplotlib and Plotly charts for BEP here
