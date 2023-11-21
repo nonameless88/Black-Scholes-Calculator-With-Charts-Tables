@@ -154,6 +154,9 @@ st.sidebar.text(f"Volatility (in percent): {sigma * 100:.2f}%")
 
 spot_prices = [i for i in range(0, int(S)+50 + 1)]
 
+# First, calculate the option price at purchase for each strike price outside the loop
+option_prices_at_purchase = {K: blackScholes(initial_price, K, r, T, sigma, type) for K in strike_prices}
+
 # Calculate P&L for each strike price
 # This is a dictionary comprehension that creates a dictionary where each strike price is a key and the value is the P&L list
 pnl_data = {K: calculate_pnl(initial_price, K, r, T, sigma, type) for K in strike_prices}
@@ -427,13 +430,17 @@ st.plotly_chart(fig12)
 pnl_traces = []  # List to store all P&L traces
 for K in strike_prices:
     if pnl_visibility[K]:  # Only add the trace if the checkbox for it is checked
+        option_price_at_purchase = option_prices_at_purchase[K]  # Get the option price at purchase for this strike price
         pnl_trace = go.Scatter(
             x=spot_prices,
             y=pnl_data[K],
             mode='lines',
             name=f"P&L for Strike {K}",
             hoverinfo='text',
-            text=[f'Strike Price: {K}<br>Underlying Price: {Si}<br>P&L: {pnl:.2f}' for Si, pnl in zip(spot_prices, pnl_data[K])],
+            text=[
+                f'Strike Price: {K}<br>Underlying Price: {Si}<br>Option Price at Purchase: {option_price_at_purchase:.2f}<br>P&L: {pnl:.2f}'
+                for Si, pnl in zip(spot_prices, pnl_data[K])
+            ],
             hovertemplate='%{text}<extra></extra>',
         )
         pnl_traces.append(pnl_trace)
