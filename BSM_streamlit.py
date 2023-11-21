@@ -347,19 +347,39 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+# Custom CSS to inject into Streamlit's HTML to adjust table styling
+st.markdown("""
+<style>
+table {
+    width: 100%;
+}
+th {
+    text-align: left;
+}
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+tr:hover {
+    background-color: #f5f5f5;
+}
+</style>
+""", unsafe_allow_html=True)
+
 # Display DataFrames as tables in Streamlit with the formatted values
 st.write('Option Price Data Table')
-st.dataframe(table1_data)
+st.dataframe(table1_data.style.set_properties(**{'text-align': 'left'}))
 st.write('Delta Data Table')
-st.dataframe(table2_data)
+st.dataframe(table2_data.style.set_properties(**{'text-align': 'left'}))
 st.write('Gamma Data Table')
-st.dataframe(table3_data)
+st.dataframe(table3_data.style.set_properties(**{'text-align': 'left'}))
 st.write('Theta Data Table')
-st.dataframe(table4_data)
+st.dataframe(table4_data.style.set_properties(**{'text-align': 'left'}))
 st.write('Vega Data Table')
-st.dataframe(table5_data)
+st.dataframe(table5_data.style.set_properties(**{'text-align': 'left'}))
 st.write('Rho Data Table')
-st.dataframe(table6_data)
+st.dataframe(table6_data.style.set_properties(**{'text-align': 'left'}))
 
 # Custom CSS to inject into Streamlit's HTML to adjust table styling
 st.markdown("""
