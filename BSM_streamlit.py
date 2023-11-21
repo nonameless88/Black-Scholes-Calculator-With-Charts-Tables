@@ -89,23 +89,20 @@ def optionRho(S, K, r, T, sigma, type="c"):
     except:
         st.sidebar.error("Please confirm all option parameters!")
 
-def calculate_pnl(underlying_price_at_purchase, Ks, r, T, sigma, type="c"):
+def calculate_pnl(initial_price, Ks, r, T, sigma, type="c"):
     pnl = {}
     for K in Ks:
-        # Calculate option price for the underlying price at purchase
-        option_price_at_purchase = blackScholes(underlying_price_at_purchase, K, r, T, sigma, type)
+        # Calculate option price only once for the given K, using the initial_price
+        option_price_at_purchase = blackScholes(initial_price, K, r, T, sigma, type)
 
         # Then calculate P&L for all spot prices
-        pnl[K] = []
-        for Si in spot_prices:
-            if type == "c":
-                # Calculate P&L for a call option at each spot price
-                pnl_at_spot = max(Si - K, 0) - option_price_at_purchase
-            elif type == "p":
-                # Calculate P&L for a put option at each spot price
-                pnl_at_spot = max(K - Si, 0) - option_price_at_purchase
-            pnl[K].append(pnl_at_spot)
+        if type == "c":
+            pnl[K] = [max(Si - K, 0) - option_price_at_purchase for Si in spot_prices]
+        elif type == "p":
+            pnl[K] = [max(K - Si, 0) - option_price_at_purchase for Si in spot_prices]
+
     return pnl
+
 
 
 st.set_page_config(page_title="Black-Scholes Calculator with charts and tables")
@@ -119,8 +116,8 @@ K = st.sidebar.number_input("Central Strike Price", min_value=1.00, step=0.10, v
 # New sidebar input for Strike Price Step ($)
 strike_price_step = st.sidebar.number_input("Strike Price Step ($)", min_value=1, value=50, step=1)
 
-# Underlying Price at Option Purchase($)
-underlying_price_at_purchase = st.sidebar.number_input("Underlying Price at Option Purchase($)", min_value=0.0, value=1900.00, step=0.01, format="%.2f")
+# Underlying Price at Option Purchase($) (Initial Price)
+initial_price = st.sidebar.number_input("Underlying Price at Option Purchase($)", min_value=0.0, value=1900.00, step=0.01, format="%.2f")
 
 
 days_to_expiry = st.sidebar.number_input("Time to Expiry Date (in days)", min_value=0, step=1, value=9)
