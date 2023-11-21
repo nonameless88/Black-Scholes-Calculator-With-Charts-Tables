@@ -16,7 +16,7 @@
 This project is a Black-Scholes Options Pricing Calculator for European Options including graphical visualization of the Option Greeks.
 It is a web-hosted interactive application, hosted using [Streamlit's](streamlit.io) Sharing functionality.
 
-The project can be found here: [Link to Project]([https://black-scholes-calculator-with-charts-tables.streamlit.app/](url))
+The project can be found here: [[Link to Project]([url](https://black-scholes-calculator-with-charts-tables.streamlit.app/))]([https://black-scholes-calculator-with-charts-tables.streamlit.app/](url))
 
 ## Black-Scholes Model
 
