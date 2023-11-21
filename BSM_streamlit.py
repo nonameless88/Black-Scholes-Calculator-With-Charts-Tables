@@ -1,3 +1,4 @@
+import pandas as pd
 import plotly.graph_objs as go
 import numpy as np
 from scipy.stats import norm
@@ -310,3 +311,54 @@ fig12 = go.Figure(data=[rho_trace], layout=go.Layout(
     hovermode='closest'
 ))
 st.plotly_chart(fig12)
+
+
+
+# Create DataFrames for each set of data
+table1_data = pd.DataFrame({
+    'Underlying Asset Price': spot_prices,
+    'Option Price': prices
+})
+table2_data = pd.DataFrame({
+    'Underlying Asset Price': spot_prices,
+    'Delta': deltas
+})
+table3_data = pd.DataFrame({
+    'Underlying Asset Price': spot_prices,
+    'Gamma': gammas
+})
+table4_data = pd.DataFrame({
+    'Underlying Asset Price': spot_prices,
+    'Theta': thetas
+})
+table5_data = pd.DataFrame({
+    'Underlying Asset Price': spot_prices,
+    'Vega': vegas
+})
+table6_data = pd.DataFrame({
+    'Underlying Asset Price': spot_prices,
+    'Rho': rhos
+})
+
+# Format the data with the correct number of decimal places
+table1_data = table1_data.round({'Underlying Asset Price': 2, 'Option Price': 10})
+table2_data = table2_data.round({'Underlying Asset Price': 2, 'Delta': 10})
+table3_data = table3_data.round({'Underlying Asset Price': 2, 'Gamma': 10})
+table4_data = table4_data.round({'Underlying Asset Price': 2, 'Theta': 10})
+table5_data = table5_data.round({'Underlying Asset Price': 2, 'Vega': 10})
+table6_data = table6_data.round({'Underlying Asset Price': 2, 'Rho': 10})
+
+# Display DataFrames as tables in Streamlit
+st.write('Option Price Data Table')
+st.dataframe(table1_data)
+st.write('Delta Data Table')
+st.dataframe(table2_data)
+st.write('Gamma Data Table')
+st.dataframe(table3_data)
+st.write('Theta Data Table')
+st.dataframe(table4_data)
+st.write('Vega Data Table')
+st.dataframe(table5_data)
+st.write('Rho Data Table')
+st.dataframe(table6_data)
+
