@@ -262,8 +262,9 @@ st.plotly_chart(fig7)
 prices = [blackScholes(i, K, r, T, sigma, type) for i in spot_prices]
 break_even_prices = [K + p if type == "c" else K - p for p in prices]
 
-# Pair each break-even price with the corresponding option price for the hover data
-hover_data = list(zip(break_even_prices, prices))
+# This will create a list of lists, where each inner list contains the break-even price
+# and the corresponding option price
+hover_data = [[bep, op] for bep, op in zip(break_even_prices, prices)]
 
 
 # Interactive Chart using Plotly for Break Even Price
