@@ -258,6 +258,14 @@ fig7 = go.Figure(data=[option_price_trace], layout=layout)
 # Display the figure in the Streamlit app
 st.plotly_chart(fig7)
 
+# After calculating the option prices and break-even prices
+prices = [blackScholes(i, K, r, T, sigma, type) for i in spot_prices]
+break_even_prices = [K + p if type == "c" else K - p for p in prices]
+
+# Pair each break-even price with the corresponding option price for the hover data
+hover_data = list(zip(break_even_prices, prices))
+
+
 # Interactive Chart using Plotly for Break Even Price
 bep_trace = go.Scatter(
     x=spot_prices,
@@ -268,6 +276,7 @@ bep_trace = go.Scatter(
     hovertemplate=(
         '<i>Underlying Asset Price</i>: %{x:.2f}' +
         '<br><b>Break Even Price</b>: %{y:.2f}' +
+        '<br><b>Option Price</b>: %{customdata[1]:.2f}' +
         '<br><b>Strike Price</b>: ' + str(K) + '<extra></extra>'# Custom hover text
     )
 )
