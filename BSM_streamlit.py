@@ -89,20 +89,22 @@ def optionRho(S, K, r, T, sigma, type="c"):
     except:
         st.sidebar.error("Please confirm all option parameters!")
 
-def calculate_pnl(S, Ks, r, T, sigma, type="c"):
+def calculate_pnl(underlying_price_at_purchase, Ks, r, T, sigma, type="c"):
     pnl = {}
     for K in Ks:
-        # Calculate option price only once for the given K, since it's the premium paid
-        option_price_at_purchase = blackScholes(S, K, r, T, sigma, type)
+        # Calculate option price for the underlying price at purchase
+        option_price_at_purchase = blackScholes(underlying_price_at_purchase, K, r, T, sigma, type)
 
         # Then calculate P&L for all spot prices
-        if type == "c":
-            # For a call option, the P&L is max(Si - K - option_price_at_purchase, -option_price_at_purchase)
-            pnl[K] = [max(Si - K - option_price_at_purchase, -option_price_at_purchase) for Si in spot_prices]
-        elif type == "p":
-            # For a put option, the P&L is max(K - Si - option_price_at_purchase, -option_price_at_purchase)
-            pnl[K] = [max(K - Si - option_price_at_purchase, -option_price_at_purchase) for Si in spot_prices]
-
+        pnl[K] = []
+        for Si in spot_prices:
+            if type == "c":
+                # Calculate P&L for a call option at each spot price
+                pnl_at_spot = max(Si - K, 0) - option_price_at_purchase
+            elif type == "p":
+                # Calculate P&L for a put option at each spot price
+                pnl_at_spot = max(K - Si, 0) - option_price_at_purchase
+            pnl[K].append(pnl_at_spot)
     return pnl
 
 
@@ -112,10 +114,14 @@ sidebar_title = st.sidebar.header("Black-Scholes Parameters")
 space = st.sidebar.header("")
 r = st.sidebar.number_input("Risk-Free Rate", min_value=0.000, max_value=1.000, step=0.001, value=0.000, format="%.3f")
 S = st.sidebar.number_input("Underlying Asset Price", min_value=0.10, step=0.10, value=3000.00)
-K = st.sidebar.number_input("Strike Price", min_value=1.00, step=0.10, value=2000.00)
+K = st.sidebar.number_input("Central Strike Price", min_value=1.00, step=0.10, value=2000.00)
 
 # New sidebar input for Strike Price Step ($)
 strike_price_step = st.sidebar.number_input("Strike Price Step ($)", min_value=1, value=50, step=1)
+
+# Underlying Price at Option Purchase($)
+underlying_price_at_purchase = st.sidebar.number_input("Underlying Price at Option Purchase($)", min_value=0.0, value=1900.00, step=0.01, format="%.2f")
+
 
 days_to_expiry = st.sidebar.number_input("Time to Expiry Date (in days)", min_value=0, step=1, value=9)
 hours_to_expiry = st.sidebar.number_input("Time to Expiry Date (in hours)", min_value=0, max_value=23, step=1, value=21)
