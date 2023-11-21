@@ -95,9 +95,11 @@ st.set_page_config(page_title="Black-Scholes Model")
 sidebar_title = st.sidebar.header("Black-Scholes Parameters")
 space = st.sidebar.header("")
 r = st.sidebar.number_input("Risk-Free Rate", min_value=0.000, max_value=1.000, step=0.001, value=0.001)
-S = st.sidebar.number_input("Underlying Asset Price", min_value=0.10, step=0.10, value=2000.00)
+S = st.sidebar.number_input("Underlying Asset Price", min_value=0.10, step=0.10, value=3000.00)
 K = st.sidebar.number_input("Strike Price", min_value=1.00, step=0.10, value=2000.00)
-days_to_expiry = st.sidebar.number_input("Time to Expiry Date (in days)", min_value=1, step=1, value=10)
+days_to_expiry = st.sidebar.number_input("Time to Expiry Date (in days)", min_value=0, step=1, value=9)
+hours_to_expiry = st.sidebar.number_input("Time to Expiry Date (in hours)", min_value=0, max_value=23, step=1, value=22)
+minutes_to_expiry = st.sidebar.number_input("Time to Expiry Date (in minutes)", min_value=0, max_value=59, step=1, value=9)
 sigma = st.sidebar.number_input("Volatility", min_value=0.000, max_value=1.000, step=0.0001, value=0.5014)
 type_input = st.sidebar.selectbox("Option Type",["Call", "Put"])
 
@@ -107,7 +109,8 @@ if type_input=="Call":
 elif type_input=="Put":
     type = "p"
 
-T = days_to_expiry/365
+total_days_to_expiry = days_to_expiry + hours_to_expiry / 24 + minutes_to_expiry / (24 * 60)
+T = total_days_to_expiry/365
 
 
 spot_prices = [i for i in range(0, int(S)+50 + 1)]
