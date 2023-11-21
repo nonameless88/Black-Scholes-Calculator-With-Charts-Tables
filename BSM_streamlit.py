@@ -123,9 +123,9 @@ sns.set_style("whitegrid")
 
 fig1, ax1 = plt.subplots()
 sns.lineplot(x=spot_prices, y=prices)
-ax1.set_ylabel('Call Option Price')
+ax1.set_ylabel('Option Price')
 ax1.set_xlabel("Underlying Asset Price")
-ax1.set_title("Call Option Price")
+ax1.set_title("Option Price")
 
 fig2, ax2 = plt.subplots()
 sns.lineplot(x=spot_prices, y=deltas)
@@ -197,17 +197,17 @@ option_price_trace = go.Scatter(
     x=spot_prices,
     y=prices,
     mode='lines+markers',
-    name='Call Option Price',
+    name='Option Price',
     hoverinfo='text',  # Change to 'text' to use custom text
     hovertemplate='<i>Underlying Asset Price</i>: %{x:.2f}'+
-                  '<br><b>Call Option Price</b>: %{y:.2f}<extra></extra>',  # Custom hover text
+                  '<br><b>Option Price</b>: %{y:.2f}<extra></extra>',  # Custom hover text
 )
 
 # Create the layout for the chart
 layout = go.Layout(
-    title='Call Option Price Interactive Chart',
+    title='Option Price Interactive Chart',
     xaxis=dict(title='Underlying Asset Price'),
-    yaxis=dict(title='Call Option Price'),
+    yaxis=dict(title='Option Price'),
     hovermode='closest'
 )
 
