@@ -95,7 +95,7 @@ st.set_page_config(page_title="Black-Scholes Model")
 
 sidebar_title = st.sidebar.header("Black-Scholes Parameters")
 space = st.sidebar.header("")
-r = st.sidebar.number_input("Risk-Free Rate", min_value=0.000, max_value=1.000, step=0.001, value=0.001)
+r = st.sidebar.number_input("Risk-Free Rate", min_value=0.000, max_value=1.000, step=0.001, value=0.001, format="%.3f")
 S = st.sidebar.number_input("Underlying Asset Price", min_value=0.10, step=0.10, value=3000.00)
 K = st.sidebar.number_input("Strike Price", min_value=1.00, step=0.10, value=2000.00)
 days_to_expiry = st.sidebar.number_input("Time to Expiry Date (in days)", min_value=0, step=1, value=9)
@@ -113,6 +113,7 @@ elif type_input=="Put":
 total_days_to_expiry = days_to_expiry + hours_to_expiry / 24 + minutes_to_expiry / (24 * 60)
 T = total_days_to_expiry/365
 
+st.sidebar.text(f"Time to Expiry (in years): {T:.5f}")
 
 spot_prices = [i for i in range(0, int(S)+50 + 1)]
 
