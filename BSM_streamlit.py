@@ -97,6 +97,10 @@ sidebar_title = st.sidebar.header("Black-Scholes Parameters")
 space = st.sidebar.header("")
 r = st.sidebar.number_input("Risk-Free Rate", min_value=0.000, max_value=1.000, step=0.001, value=0.000, format="%.3f")
 S = st.sidebar.number_input("Underlying Asset Price", min_value=0.10, step=0.10, value=3000.00)
+
+# New sidebar input for Strike Price Step ($)
+strike_price_step = st.sidebar.number_input("Strike Price Step ($)", min_value=1, value=50, step=1)
+
 K = st.sidebar.number_input("Strike Price", min_value=1.00, step=0.10, value=2000.00)
 days_to_expiry = st.sidebar.number_input("Time to Expiry Date (in days)", min_value=0, step=1, value=9)
 hours_to_expiry = st.sidebar.number_input("Time to Expiry Date (in hours)", min_value=0, max_value=23, step=1, value=21)
@@ -104,8 +108,10 @@ minutes_to_expiry = st.sidebar.number_input("Time to Expiry Date (in minutes)", 
 sigma = st.sidebar.number_input("Volatility", min_value=0.0000, max_value=1.0000, step=0.0001, value=0.4989, format="%.4f")
 type_input = st.sidebar.selectbox("Option Type",["Call", "Put"])
 
-# New sidebar input for Strike Price Step ($)
-strike_price_step = st.sidebar.number_input("Strike Price Step ($)", min_value=1, value=50, step=1)
+# New code block to calculate strike prices
+central_strike = K  # Your central strike price from the sidebar
+num_strikes = 5  # Number of strikes above and below the central strike
+strike_prices = [central_strike + i * strike_price_step for i in range(-num_strikes, num_strikes + 1)]
 
 type=""
 if type_input=="Call":
