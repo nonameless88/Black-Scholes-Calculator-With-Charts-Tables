@@ -1,3 +1,10 @@
+st.set_page_config(page_title="Black-Scholes Model", layout="wide")
+# Custom CSS to ensure tables take up the maximum available width
+st.markdown("""
+<style>
+.css-1l02zno {max-width:100% !important;}
+</style>
+""", unsafe_allow_html=True)
 import pandas as pd
 import plotly.graph_objs as go
 import numpy as np
@@ -341,6 +348,12 @@ table6_data = pd.DataFrame({
     'Underlying Asset Price': spot_prices,
     'Rho': [f"{x:.10f}" for x in rhos]
 })
+# Custom CSS to ensure tables take up the maximum available width
+st.markdown("""
+<style>
+.css-1l02zno {max-width:100% !important;}
+</style>
+""", unsafe_allow_html=True)
 
 # Display DataFrames as tables in Streamlit with the formatted values
 st.write('Option Price Data Table')
@@ -355,6 +368,27 @@ st.write('Vega Data Table')
 st.dataframe(table5_data)
 st.write('Rho Data Table')
 st.dataframe(table6_data)
+
+# Custom CSS to inject into Streamlit's HTML to adjust table styling
+st.markdown("""
+<style>
+table {
+    width: 100%;
+}
+th {
+    text-align: left;
+}
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+tr:hover {
+    background-color: #f5f5f5;
+}
+</style>
+""", unsafe_allow_html=True)
+
 # Concatenate all the tables by the 'Underlying Asset Price' column
 tablefinal_data = pd.concat(
     [table1_data.set_index('Underlying Asset Price'),
@@ -370,4 +404,4 @@ tablefinal_data = tablefinal_data.reset_index()
 
 # Display the final table
 st.write('Final Data Table')
-st.dataframe(tablefinal_data)
+st.dataframe(tablefinal_data.style.set_properties(**{'text-align': 'left'}))
