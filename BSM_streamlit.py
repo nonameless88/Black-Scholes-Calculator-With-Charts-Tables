@@ -198,7 +198,9 @@ option_price_trace = go.Scatter(
     y=prices,
     mode='lines+markers',
     name='Call Option Price',
-    hoverinfo='x+y'
+    hoverinfo='text',  # Change to 'text' to use custom text
+    hovertemplate='<i>Underlying Asset Price</i>: %{x:.2f}'+
+                  '<br><b>Call Option Price</b>: %{y:.2f}<extra></extra>',  # Custom hover text
 )
 
 # Create the layout for the chart
