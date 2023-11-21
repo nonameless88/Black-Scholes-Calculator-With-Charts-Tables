@@ -1,3 +1,4 @@
+import pandas as pd
 import numpy as np
 from scipy.stats import norm
 import matplotlib.pyplot as plt
@@ -120,11 +121,29 @@ rhos = [optionRho(i, K, r, T, sigma, type) for i in spot_prices]
 
 sns.set_style("whitegrid")
 
-fig1, ax1 = plt.subplots()
-sns.lineplot(x=spot_prices, y=prices)
-ax1.set_ylabel('Option Price')
-ax1.set_xlabel("Underlying Asset Price")
-ax1.set_title("Option Price")
+# Create a trace for the Option Price chart
+option_price_trace = go.Scatter(
+    x=spot_prices,
+    y=prices,
+    mode='lines+markers',
+    name='Option Price',
+    hoverinfo='x+y'
+)
+
+# Create the layout for the chart
+layout = go.Layout(
+    title='Option Price',
+    xaxis=dict(title='Underlying Asset Price'),
+    yaxis=dict(title='Option Price'),
+    hovermode='closest'
+)
+
+# Create the figure with the trace and layout
+fig1 = go.Figure(data=[option_price_trace], layout=layout)
+
+# Display the figure in the Streamlit app
+st.plotly_chart(fig1)
+
 
 fig2, ax2 = plt.subplots()
 sns.lineplot(x=spot_prices, y=deltas)
