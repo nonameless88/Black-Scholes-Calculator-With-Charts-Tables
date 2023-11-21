@@ -199,7 +199,7 @@ option_price_trace = go.Scatter(
     x=spot_prices,
     y=prices,
     mode='lines+markers',
-    name='Option Price',
+    name='Call Option Price',
     hoverinfo='x+y'
 )
 
