@@ -100,7 +100,7 @@ K = st.sidebar.number_input("Strike Price", min_value=1.00, step=0.10, value=200
 days_to_expiry = st.sidebar.number_input("Time to Expiry Date (in days)", min_value=0, step=1, value=9)
 hours_to_expiry = st.sidebar.number_input("Time to Expiry Date (in hours)", min_value=0, max_value=23, step=1, value=22)
 minutes_to_expiry = st.sidebar.number_input("Time to Expiry Date (in minutes)", min_value=0, max_value=59, step=1, value=9)
-sigma = st.sidebar.number_input("Volatility", min_value=0.000, max_value=1.000, step=0.0001, value=0.5014)
+sigma = st.sidebar.number_input("Volatility", min_value=0.0000, max_value=1.0000, step=0.0001, value=0.5014, format="%.4f)
 type_input = st.sidebar.selectbox("Option Type",["Call", "Put"])
 
 type=""
