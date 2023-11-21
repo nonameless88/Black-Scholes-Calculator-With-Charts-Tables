@@ -682,7 +682,7 @@ csv_pnl = convert_df_to_csv(table_pnl_data)
 st.download_button(
     label="Export P&L Data Table as CSV",
     data=csv_pnl,
-    file_name=f'PNL_Data_Table_{option_type}_{strike_price:.0f}.csv',
+    file_name=f'PNL_Data_Table_{option_type}_{central_strike}_{num_strikes*2+1}_{strike_price_step}.csv',
     mime='text/csv',
 )
 
