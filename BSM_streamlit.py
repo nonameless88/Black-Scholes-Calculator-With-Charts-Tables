@@ -257,7 +257,10 @@ st.pyplot(fig4)
 st.pyplot(fig5)
 st.pyplot(fig6)
 
+#---------------------------------------------------------#
 # Interactive charts using Plotly
+#---------------------------------------------------------#
+
 # Create a trace for the Option Price chart
 option_price_trace = go.Scatter(
     x=spot_prices,
@@ -405,7 +408,37 @@ fig12 = go.Figure(data=[rho_trace], layout=go.Layout(
 ))
 st.plotly_chart(fig12)
 
+# New code block for creating P&L chart
+pnl_traces = []  # List to store all P&L traces
+for K in strike_prices:
+    if pnl_visibility[K]:  # Only add the trace if the checkbox for it is checked
+        pnl_trace = go.Scatter(
+            x=spot_prices,
+            y=pnl_data[K],
+            mode='lines',
+            name=f"P&L for Strike {K}",
+            hoverinfo='text',
+            text=[f'Strike Price: {K}<br>Underlying Price: {Si}<br>P&L: {pnl:.2f}' for Si, pnl in zip(spot_prices, pnl_data[K])],
+            hovertemplate='%{text}<extra></extra>',
+        )
+        pnl_traces.append(pnl_trace)
 
+# Create the P&L figure and add all the traces
+pnl_figure = go.Figure(data=pnl_traces)
+pnl_figure.update_layout(
+    title='P&L Interactive Chart',
+    xaxis=dict(title='Underlying Asset Price'),
+    yaxis=dict(title='Profit & Loss'),
+    hovermode='closest'
+)
+
+# Display the P&L figure in the Streamlit app
+st.plotly_chart(pnl_figure)
+
+
+#---------------------------------------------------------#
+#CREATING TABLES#
+#---------------------------------------------------------#
 
 # Create DataFrames for each set of data
 table1_data = pd.DataFrame({
