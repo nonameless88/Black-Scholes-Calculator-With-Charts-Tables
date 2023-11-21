@@ -208,11 +208,11 @@ col1.metric("Theta", f"{theta:.5f}")
     # Assuming break_even_price is calculated correctly and is a list of values
     break_even_price_value = break_even_price[-1]  # Gets the last value of the list
     label_bep = "Call Option Break Even Price" if type_input == "Call" else "Put Option Break Even Price"
-    st.metric(label_bep, human_readable(break_even_price_value))
+    st.metric(label_bep, break_even_price_value)
 
     col1, col2 = st.columns(2)
-    col1.metric("Vega", human_readable(optionVega(S, K, r, T, sigma)))
-    col2.metric("Rho", human_readable(optionRho(S, K, r, T, sigma, type)))
+    col1.metric("Vega", optionVega(S, K, r, T, sigma))
+    col2.metric("Rho", optionRho(S, K, r, T, sigma, type))
 
 st.header("")
 st.markdown("<h3 align='center'>Visualization of the Greeks</h3>", unsafe_allow_html=True)
