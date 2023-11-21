@@ -90,19 +90,20 @@ def optionRho(S, K, r, T, sigma, type="c"):
         st.sidebar.error("Please confirm all option parameters!")
 
 def calculate_pnl(initial_price, K, r, T, sigma, type="c"):
-    pnl = {}
-    for K in strike_prices:
-        # Calculate option price only once for the given K, using the initial_price
-        option_price_at_purchase = blackScholes(initial_price, K, r, T, sigma, type)
-
-        # Then calculate P&L for all spot prices
+    # Calculate option price only once for the given K, using the initial_price
+    option_price_at_purchase = blackScholes(initial_price, K, r, T, sigma, type)
+    
+    # Calculate P&L for all spot prices
+    pnl = []
+    for S_current in spot_prices:
         if type == "c":
             # For a call option, the P&L is Current Asset Price - Strike Price - option_price_at_purchase
-            pnl[K] = S - K - option_price_at_purchase if S - K > option_price_at_purchase else -option_price_at_purchase 
+            pnl_point = S_current - K - option_price_at_purchase if S_current - K > option_price_at_purchase else -option_price_at_purchase
         elif type == "p":
             # For a put option, the P&L is Strike Price - Current Asset Price - option_price_at_purchase
-            pnl[K] = K - S - option_price_at_purchase if K - i > option_price_at_purchase else -option_price_at_purchase 
-
+            pnl_point = K - S_current - option_price_at_purchase if K - S_current > option_price_at_purchase else -option_price_at_purchase
+        pnl.append(pnl_point)
+    
     return pnl
 
 
@@ -154,7 +155,8 @@ st.sidebar.text(f"Volatility (in percent): {sigma * 100:.2f}%")
 spot_prices = [i for i in range(0, int(S)+50 + 1)]
 
 # Calculate P&L for each strike price
-pnl_data = [calculate_pnl(i, strike_prices, r, T, sigma, type) for i in spot_prices]
+# This is a dictionary comprehension that creates a dictionary where each strike price is a key and the value is the P&L list
+pnl_data = {K: calculate_pnl(initial_price, K, r, T, sigma, type) for K in strike_prices}
 
 prices = [blackScholes(i, K, r, T, sigma, type) for i in spot_prices]
 # New code block: Calculate BEP and insert new Matplotlib and Plotly charts for BEP here
@@ -431,7 +433,7 @@ for K in strike_prices:
             mode='lines',
             name=f"P&L for Strike {K}",
             hoverinfo='text',
-            text=[f'Strike Price: {K}<br>Underlying Price: {i}<br>P&L: {pnl:.2f}' for i, pnl in zip(spot_prices, pnl_data[K])],
+            text=[f'Strike Price: {K}<br>Underlying Price: {Si}<br>P&L: {pnl:.2f}' for Si, pnl in zip(spot_prices, pnl_data[K])],
             hovertemplate='%{text}<extra></extra>',
         )
         pnl_traces.append(pnl_trace)
