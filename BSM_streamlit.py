@@ -176,7 +176,6 @@ ax6.set_ylabel('Rho')
 ax6.set_xlabel("Underlying Asset Price")
 ax6.set_title("Rho")
 
-
 fig2.tight_layout()
 fig3.tight_layout()
 fig4.tight_layout()
