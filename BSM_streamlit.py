@@ -208,16 +208,15 @@ col1.metric("Delta", f"{delta:.4f}")
 
 # Third row of metrics
 col1, col2, col3, col4, col5, col6 = st.columns(6)
-col1.metric("Gamma", f"{gamma:.5f}")
+col1.metric("Gamma", f"{gamma:.10f}")
 
 # Fourth row of metrics
 col1, col2, col3, col4, col5, col6 = st.columns(6)
-col1.metric("Theta", f"{theta:.5f}")
+col1.metric("Theta", f"{theta:.3f}")
 
-# Assuming break_even_price is calculated correctly and is a list of values
-break_even_price_value = break_even_price[-1]  # Gets the last value of the list
+# Assuming break_even_price is calculated correctly and is a list of values???
 label_bep = "Call Option Break Even Price" if type_input == "Call" else "Put Option Break Even Price"
-st.metric(label_bep, break_even_price_value)
+st.metric(label_bep, break_even_price)
 
 col1, col2 = st.columns(2)
 col1.metric("Vega", f"{vega:.5f}")
