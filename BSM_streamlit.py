@@ -188,26 +188,31 @@ st.markdown("<h6>Modified for ETH price and Deribit Options (Slightly different 
 st.markdown("<h3 align='center'>Option Prices and Greeks</h3>", unsafe_allow_html=True)
 st.header("")
 
-def human_readable(number):
-    return f"{number:.5f}" if number < 0.01 else f"{number:.2f}"
-# Create an expander to show the details of option prices and Greeks
-with st.expander("Option Prices and Greeks"):
-    col1, col2, col3, col4, col5 = st.columns(5)
-    col1.metric("Call Price", human_readable(blackScholes(S, K, r, T, sigma, type="c")))
-    col2.metric("Put Price", human_readable(blackScholes(S, K, r, T, sigma, type="p")))
-    col3.metric("Delta", human_readable(optionDelta(S, K, r, T, sigma, type)))
-    col4.metric("Gamma", human_readable(optionGamma(S, K, r, T, sigma)))
-    col5.metric("Theta", human_readable(optionTheta(S, K, r, T, sigma, type)))
+# First row of metrics
+col1, col2, col3, col4, col5, col6 = st.columns(6)
+col1.metric("Call Price", f"{call_price:.2f}")
+col2.metric("Put Price", f"{put_price:.2f}")
+
+# Second row of metrics
+col1, col2, col3, col4, col5, col6 = st.columns(6)
+col1.metric("Delta", f"{delta:.4f}")
+
+# Third row of metrics
+col1, col2, col3, col4, col5, col6 = st.columns(6)
+col1.metric("Gamma", f"{gamma:.5f}")
+
+# Fourth row of metrics
+col1, col2, col3, col4, col5, col6 = st.columns(6)
+col1.metric("Theta", f"{theta:.5f}")
 
     # Assuming break_even_price is calculated correctly and is a list of values
     break_even_price_value = break_even_price[-1]  # Gets the last value of the list
     label_bep = "Call Option Break Even Price" if type_input == "Call" else "Put Option Break Even Price"
     st.metric(label_bep, human_readable(break_even_price_value))
 
-    col1, col2, col3 = st.columns(3)
+    col1, col2 = st.columns(2)
     col1.metric("Vega", human_readable(optionVega(S, K, r, T, sigma)))
     col2.metric("Rho", human_readable(optionRho(S, K, r, T, sigma, type)))
-    col3.metric("Break Even Price", human_readable(break_even_price_value))
 
 st.header("")
 st.markdown("<h3 align='center'>Visualization of the Greeks</h3>", unsafe_allow_html=True)
