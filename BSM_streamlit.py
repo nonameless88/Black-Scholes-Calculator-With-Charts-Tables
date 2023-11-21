@@ -190,8 +190,8 @@ st.header("")
 
 # First row of metrics
 col1, col2, col3, col4, col5, col6 = st.columns(6)
-col1.metric("Call Price", f"{call_price:.2f}")
-col2.metric("Put Price", f"{put_price:.2f}")
+col1.metric("Call Price", str(blackScholes(S, K, r, T, sigma, type="c")))
+col2.metric("Put Price", str(blackScholes(S, K, r, T, sigma, type="p")))
 
 # Second row of metrics
 col1, col2, col3, col4, col5, col6 = st.columns(6)
