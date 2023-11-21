@@ -206,7 +206,7 @@ bcol5.metric("Rho", str(round(optionRho(S, K, r, T, sigma,type="c"), 3)))
 st.header("")
 st.markdown("<h3 align='center'>Visualization of the Greeks</h3>", unsafe_allow_html=True)
 st.header("")
-st.pyplot(fig1)
+
 st.pyplot(fig2)
 st.pyplot(fig3)
 st.pyplot(fig4)
