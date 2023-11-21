@@ -125,6 +125,30 @@ thetas = [optionTheta(i, K, r, T, sigma, type) for i in spot_prices]
 vegas = [optionVega(i, K, r, T, sigma) for i in spot_prices]
 rhos = [optionRho(i, K, r, T, sigma, type) for i in spot_prices]
 
+# Create DataFrames for each set of data and format the columns
+data_frames = {
+    'Option Price': prices,
+    'Delta': deltas,
+    'Gamma': gammas,
+    'Theta': thetas,
+    'Vega': vegas,
+    'Rho': rhos
+}
+
+# Now, iterate over the dictionary and create a DataFrame for each item
+for name, values in data_frames.items():
+    df = pd.DataFrame({
+        'Underlying Asset Price': spot_prices,
+        name: values
+    })
+
+    # Apply formatting to have 10 decimal places for the specified columns
+    df[name] = df[name].apply(lambda x: f'{x:.10f}')
+
+    # Display each DataFrame in Streamlit
+    st.write(f"{name} Data Table")
+    st.dataframe(df)
+
 sns.set_style("whitegrid")
 
 fig1, ax1 = plt.subplots()
