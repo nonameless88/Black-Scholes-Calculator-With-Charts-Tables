@@ -397,3 +397,65 @@ st.write('Vega Data Table')
 st.dataframe(table5_data.style.set_properties(**{'text-align': 'left'}))
 st.write('Rho Data Table')
 st.dataframe(table6_data.style.set_properties(**{'text-align': 'left'}))
+
+# Function to convert DataFrame to CSV for download
+def convert_df_to_csv(df):
+    return df.to_csv(index=False).encode('utf-8')
+
+# Export CSV buttons for each table
+csv = convert_df_to_csv(table1_data)
+st.download_button(
+    label="Export Option Price Data Table as CSV",
+    data=csv,
+    file_name='Option_Price_Data_Table.csv',
+    mime='text/csv',
+)
+
+csv = convert_df_to_csv(table2_data)
+st.download_button(
+    label="Export Delta Data Table as CSV",
+    data=csv,
+    file_name='Delta_Data_Table.csv',
+    mime='text/csv',
+)
+
+csv = convert_df_to_csv(table3_data)
+st.download_button(
+    label="Export Gamma Data Table as CSV",
+    data=csv,
+    file_name='Gamma_Data_Table.csv',
+    mime='text/csv',
+)
+
+csv = convert_df_to_csv(table4_data)
+st.download_button(
+    label="Export Theta Data Table as CSV",
+    data=csv,
+    file_name='Theta_Data_Table.csv',
+    mime='text/csv',
+)
+
+csv = convert_df_to_csv(table5_data)
+st.download_button(
+    label="Export Vega Data Table as CSV",
+    data=csv,
+    file_name='Vega_Data_Table.csv',
+    mime='text/csv',
+)
+
+csv = convert_df_to_csv(table6_data)
+st.download_button(
+    label="Export Rho Data Table as CSV",
+    data=csv,
+    file_name='Rho_Data_Table.csv',
+    mime='text/csv',
+)
+
+# And the final table
+csv = convert_df_to_csv(tablefinal_data)
+st.download_button(
+    label="Export Final Data Table as CSV",
+    data=csv,
+    file_name='Final_Data_Table.csv',
+    mime='text/csv',
+)
