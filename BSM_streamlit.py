@@ -104,6 +104,9 @@ minutes_to_expiry = st.sidebar.number_input("Time to Expiry Date (in minutes)", 
 sigma = st.sidebar.number_input("Volatility", min_value=0.0000, max_value=1.0000, step=0.0001, value=0.4989, format="%.4f")
 type_input = st.sidebar.selectbox("Option Type",["Call", "Put"])
 
+# New sidebar input for Strike Price Step ($)
+strike_price_step = st.sidebar.number_input("Strike Price Step ($)", min_value=1, value=50, step=1)
+
 type=""
 if type_input=="Call":
     type = "c"
