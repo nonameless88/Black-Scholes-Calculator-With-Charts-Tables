@@ -1,5 +1,4 @@
 import plotly.graph_objs as go
-import pandas as pd
 import numpy as np
 from scipy.stats import norm
 import matplotlib.pyplot as plt
@@ -122,29 +121,11 @@ rhos = [optionRho(i, K, r, T, sigma, type) for i in spot_prices]
 
 sns.set_style("whitegrid")
 
-# Create a trace for the Option Price chart
-option_price_trace = go.Scatter(
-    x=spot_prices,
-    y=prices,
-    mode='lines+markers',
-    name='Option Price',
-    hoverinfo='x+y'
-)
-
-# Create the layout for the chart
-layout = go.Layout(
-    title='Option Price',
-    xaxis=dict(title='Underlying Asset Price'),
-    yaxis=dict(title='Option Price'),
-    hovermode='closest'
-)
-
-# Create the figure with the trace and layout
-fig1 = go.Figure(data=[option_price_trace], layout=layout)
-
-# Display the figure in the Streamlit app
-st.plotly_chart(fig1)
-
+fig1, ax1 = plt.subplots()
+sns.lineplot(x=spot_prices, y=prices)
+ax1.set_ylabel('Option Price')
+ax1.set_xlabel("Underlying Asset Price")
+ax1.set_title("Option Price")
 
 fig2, ax2 = plt.subplots()
 sns.lineplot(x=spot_prices, y=deltas)
@@ -176,6 +157,14 @@ ax6.set_ylabel('Rho')
 ax6.set_xlabel("Underlying Asset Price")
 ax6.set_title("Rho")
 
+fig1.tight_layout()
+fig2.tight_layout()
+fig3.tight_layout()
+fig4.tight_layout()
+fig5.tight_layout()
+fig6.tight_layout()
+
+
 st.markdown("<h2 align='center'>Black-Scholes Option Price Calculator</h2>", unsafe_allow_html=True)
 st.markdown("<h5 align='center'>Made by Tiago Moreira</h5>", unsafe_allow_html=True)
 st.header("")
@@ -198,10 +187,33 @@ bcol5.metric("Rho", str(round(optionRho(S, K, r, T, sigma,type="c"), 3)))
 st.header("")
 st.markdown("<h3 align='center'>Visualization of the Greeks</h3>", unsafe_allow_html=True)
 st.header("")
-
+st.pyplot(fig1)
 st.pyplot(fig2)
 st.pyplot(fig3)
 st.pyplot(fig4)
 st.pyplot(fig5)
 st.pyplot(fig6)
+
+# Create a trace for the Option Price chart
+option_price_trace = go.Scatter(
+    x=spot_prices,
+    y=prices,
+    mode='lines+markers',
+    name='Option Price',
+    hoverinfo='x+y'
+)
+
+# Create the layout for the chart
+layout = go.Layout(
+    title='Option Price',
+    xaxis=dict(title='Underlying Asset Price'),
+    yaxis=dict(title='Option Price'),
+    hovermode='closest'
+)
+
+# Create the figure with the trace and layout
+fig1 = go.Figure(data=[option_price_trace], layout=layout)
+
+# Display the figure in the Streamlit app
+st.plotly_chart(fig1)
 
