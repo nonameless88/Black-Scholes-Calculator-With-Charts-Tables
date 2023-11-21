@@ -671,7 +671,14 @@ for K, pnl in pnl_data.items():
 st.write('P&L Data Table')
 st.dataframe(table_pnl_data)
 
-# Function to convert the P&L DataFrame to CSV for download
+def convert_df_to_csv(df):
+    # Round the P&L values to two decimals before converting to CSV
+    for col in df.columns:
+        if 'P&L for Strike' in col:
+            df[col] = df[col].apply(lambda x: f"{float(x):.2f}")
+    return df.to_csv(index=False).encode('utf-8')
+
+# Export CSV Button for P&L Data Table
 csv_pnl = convert_df_to_csv(table_pnl_data)
 st.download_button(
     label="Export P&L Data Table as CSV",
