@@ -176,13 +176,6 @@ ax6.set_ylabel('Rho')
 ax6.set_xlabel("Underlying Asset Price")
 ax6.set_title("Rho")
 
-fig2.tight_layout()
-fig3.tight_layout()
-fig4.tight_layout()
-fig5.tight_layout()
-fig6.tight_layout()
-
-
 st.markdown("<h2 align='center'>Black-Scholes Option Price Calculator</h2>", unsafe_allow_html=True)
 st.markdown("<h5 align='center'>Made by Tiago Moreira</h5>", unsafe_allow_html=True)
 st.header("")
