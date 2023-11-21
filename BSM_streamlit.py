@@ -194,6 +194,8 @@ put_price = blackScholes(S, K, r, T, sigma, type="p")
 delta = optionDelta(S, K, r, T, sigma, type)
 gamma = optionGamma(S, K, r, T, sigma)
 theta = optionTheta(S, K, r, T, sigma, type)
+vega = optionVega(S, K, r, T, sigma)
+rho = optionRho(S, K, r, T, sigma, type)
 
 # First row of metrics
 col1, col2, col3, col4, col5, col6 = st.columns(6)
@@ -218,8 +220,8 @@ label_bep = "Call Option Break Even Price" if type_input == "Call" else "Put Opt
 st.metric(label_bep, break_even_price_value)
 
 col1, col2 = st.columns(2)
-col1.metric("Vega", optionVega(S, K, r, T, sigma))
-col2.metric("Rho", optionRho(S, K, r, T, sigma, type))
+col1.metric("Vega", f"{vega:.5f}")
+col2.metric("Rho", f"{rho:.5f}") 
 
 st.header("")
 st.markdown("<h3 align='center'>Visualization of the Greeks</h3>", unsafe_allow_html=True)
