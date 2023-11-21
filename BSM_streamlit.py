@@ -89,16 +89,6 @@ def optionRho(S, K, r, T, sigma, type="c"):
     except:
         st.sidebar.error("Please confirm all option parameters!")
 
-def calculate_pnl(S, strike_prices, type="c"):
-    pnl = {}
-    for K in strike_prices:
-        if type == "c":
-            pnl[K] = [max(Si - K, 0) for Si in spot_prices]
-        elif type == "p":
-            pnl[K] = [max(K - Si, 0) for Si in spot_prices]
-    return pnl
-
-pnl_data = calculate_pnl(spot_prices, strike_prices, type)
 
 
 st.set_page_config(page_title="Black-Scholes Calculator with charts and tables")
@@ -113,10 +103,6 @@ hours_to_expiry = st.sidebar.number_input("Time to Expiry Date (in hours)", min_
 minutes_to_expiry = st.sidebar.number_input("Time to Expiry Date (in minutes)", min_value=0, max_value=59, step=1, value=26)
 sigma = st.sidebar.number_input("Volatility", min_value=0.0000, max_value=1.0000, step=0.0001, value=0.4989, format="%.4f")
 type_input = st.sidebar.selectbox("Option Type",["Call", "Put"])
-
-#New sidebar Strike Price Step ($)
-strike_price_step = st.sidebar.number_input("Strike Price Step ($)", min_value=1, value=50, step=1)
-
 
 type=""
 if type_input=="Call":
@@ -142,53 +128,6 @@ thetas = [optionTheta(i, K, r, T, sigma, type) for i in spot_prices]
 vegas = [optionVega(i, K, r, T, sigma) for i in spot_prices]
 rhos = [optionRho(i, K, r, T, sigma, type) for i in spot_prices]
 
-# Add this after you've defined the central strike price 'K'
-central_strike = K  # This is your central strike price
-strike_prices = [central_strike + i * strike_price_step for i in range(-5, 5)]  # Generates a list of strike prices centered around the central_strike
-pnl_data = calculate_pnl(spot_prices, strike_prices, type)
-
-#------------------------------------#
-#Test creating plotly chart for PNL at 11 strike price
-# Add this where you are preparing data for your Plotly graph
-checkboxes = {K: st.sidebar.checkbox(f"Show PNL for K={K}", True, key=K) for K in strikes}
-
-# This should go after you've defined strike_prices
-visibility = {}
-for K in strike_prices:
-    visibility[K] = st.sidebar.checkbox(f"Show P&L for Strike {K}", True)
-
-# This should go right before you start creating your Plotly chart (this is creating trace)
-pnl_data = calculate_pnl(spot_prices, strike_prices, type)
-traces = []
-for K, pnl in pnl_data.items():
-    if visibility[K]:
-        trace = go.Scatter(x=spot_prices, y=pnl, mode='lines', name=f"Strike {K}")
-        traces.append(trace)
-
-# This is actually redundant since you define hoverinfo when you create the trace, 
-# but if you wanted to add additional hover information you would modify the trace creation as follows:
-for K, pnl in pnl_data.items():
-    if visibility[K]:
-        trace = go.Scatter(
-            x=spot_prices,
-            y=pnl,
-            mode='lines',
-            name=f"Strike {K}",
-            hoverinfo='text',
-        text=[f'Strike Price: {K}<br>Underlying Price: {s}<br>Option Price: {op:.2f}<br>PnL: {pnl:.2f}' 
-              for s, op, pnl in zip(spot_prices, option_prices, pnl_data)],
-        hovertemplate='%{text}<extra></extra>',
-)
-        
-# Create the figure with the collected traces
-fig_pnl = go.Figure(data=pnl_traces, layout=go.Layout(
-    title='Option P&L Chart',
-    xaxis=dict(title='Underlying Asset Price'),
-    yaxis=dict(title='Option P&L')
-))
-
-
-#------------------------------------#
 sns.set_style("whitegrid")
 
 fig1, ax1 = plt.subplots()
