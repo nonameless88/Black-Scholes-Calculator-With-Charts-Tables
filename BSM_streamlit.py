@@ -89,9 +89,9 @@ def optionRho(S, K, r, T, sigma, type="c"):
     except:
         st.sidebar.error("Please confirm all option parameters!")
 
-def calculate_pnl(initial_price, Ks, r, T, sigma, type="c"):
+def calculate_pnl(initial_price, K, r, T, sigma, type="c"):
     pnl = {}
-    for K in Ks:
+    for K in strike_prices:
         # Calculate option price only once for the given K, using the initial_price
         option_price_at_purchase = blackScholes(initial_price, K, r, T, sigma, type)
 
