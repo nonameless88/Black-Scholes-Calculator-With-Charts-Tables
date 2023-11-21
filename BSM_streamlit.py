@@ -89,7 +89,15 @@ def optionRho(S, K, r, T, sigma, type="c"):
     except:
         st.sidebar.error("Please confirm all option parameters!")
 
-
+def calculate_pnl(S, Ks, r, T, sigma, type="c"):
+    pnl = {}
+    for K in Ks:
+        option_prices = [blackScholes(Si, K, r, T, sigma, type) for Si in spot_prices]
+        if type == "c":
+            pnl[K] = [max(Si - K, 0) - op for Si, op in zip(spot_prices, option_prices)]
+        elif type == "p":
+            pnl[K] = [max(K - Si, 0) - op for Si, op in zip(spot_prices, option_prices)]
+    return pnl
 
 st.set_page_config(page_title="Black-Scholes Calculator with charts and tables")
 
@@ -97,11 +105,11 @@ sidebar_title = st.sidebar.header("Black-Scholes Parameters")
 space = st.sidebar.header("")
 r = st.sidebar.number_input("Risk-Free Rate", min_value=0.000, max_value=1.000, step=0.001, value=0.000, format="%.3f")
 S = st.sidebar.number_input("Underlying Asset Price", min_value=0.10, step=0.10, value=3000.00)
+K = st.sidebar.number_input("Strike Price", min_value=1.00, step=0.10, value=2000.00)
 
 # New sidebar input for Strike Price Step ($)
 strike_price_step = st.sidebar.number_input("Strike Price Step ($)", min_value=1, value=50, step=1)
 
-K = st.sidebar.number_input("Strike Price", min_value=1.00, step=0.10, value=2000.00)
 days_to_expiry = st.sidebar.number_input("Time to Expiry Date (in days)", min_value=0, step=1, value=9)
 hours_to_expiry = st.sidebar.number_input("Time to Expiry Date (in hours)", min_value=0, max_value=23, step=1, value=21)
 minutes_to_expiry = st.sidebar.number_input("Time to Expiry Date (in minutes)", min_value=0, max_value=59, step=1, value=26)
@@ -112,6 +120,11 @@ type_input = st.sidebar.selectbox("Option Type",["Call", "Put"])
 central_strike = K  # Your central strike price from the sidebar
 num_strikes = 5  # Number of strikes above and below the central strike
 strike_prices = [central_strike + i * strike_price_step for i in range(-num_strikes, num_strikes + 1)]
+
+# New code block for creating checkbox controls for P&L lines
+pnl_visibility = {K: True for K in strike_prices}  # Dictionary to keep track of visibility
+for K in strike_prices:
+    pnl_visibility[K] = st.sidebar.checkbox(f"Show P&L for Strike {K}", True, key=f"checkbox_{K}")
 
 type=""
 if type_input=="Call":
@@ -126,6 +139,9 @@ st.sidebar.text(f"Time to Expiry (years): T={T:.5f}")
 st.sidebar.text(f"Volatility (in percent): {sigma * 100:.2f}%")
 
 spot_prices = [i for i in range(0, int(S)+50 + 1)]
+
+# Calculate P&L for each strike price
+pnl_data = calculate_pnl(S, strike_prices, r, T, sigma, type)
 
 prices = [blackScholes(i, K, r, T, sigma, type) for i in spot_prices]
 # New code block: Calculate BEP and insert new Matplotlib and Plotly charts for BEP here
