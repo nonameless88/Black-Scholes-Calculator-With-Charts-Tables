@@ -274,6 +274,7 @@ bep_trace = go.Scatter(
     mode='lines+markers',
     name='Break Even Price',
     hoverinfo='text',  # Enabling custom hover text
+    customdata=hover_data,  # Set customdata to hover_data
     hovertemplate=(
         '<i>Underlying Asset Price</i>: %{x:.2f}' +
         '<br><b>Break Even Price</b>: %{y:.2f}' +
