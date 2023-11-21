@@ -137,8 +137,7 @@ strike_prices = [central_strike + i * strike_price_step for i in range(-num_stri
 
 # New code block for creating checkbox controls for P&L lines
 pnl_visibility = {K: True for K in strike_prices}  # Dictionary to keep track of visibility
-for K in strike_prices:
-    pnl_visibility[K] = st.sidebar.checkbox(f"Show P&L for Strike {K}", True, key=f"checkbox_{K}")
+
 
 type=""
 if type_input=="Call":
@@ -456,6 +455,33 @@ pnl_figure.update_layout(
 
 # Display the P&L figure in the Streamlit app
 st.plotly_chart(pnl_figure)
+
+# Space before the new checkboxes
+st.write("\n\n")
+
+# Initialize an empty dictionary to store checkbox states
+pnl_visibility = {}
+
+# Define the number of checkboxes per row
+checkboxes_per_row = 5
+
+# Calculate the number of rows needed for all checkboxes
+num_rows = len(strike_prices) // checkboxes_per_row + (len(strike_prices) % checkboxes_per_row > 0)
+
+# Create the checkbox rows
+for row in range(num_rows):
+    # Create a row of columns for checkboxes
+    cols = st.columns(checkboxes_per_row)
+    # For each column in the current row, create a checkbox if there is a strike price available
+    for i in range(checkboxes_per_row):
+        # Calculate the index of the strike price
+        strike_index = row * checkboxes_per_row + i
+        if strike_index < len(strike_prices):
+            # Create the checkbox in the respective column
+            with cols[i]:
+                strike = strike_prices[strike_index]
+                # Create a checkbox and store the state in the pnl_visibility dictionary
+                pnl_visibility[strike] = st.checkbox(f"Show P&L for Strike {strike}", True, key=f"checkbox_{strike}")
 
 
 #---------------------------------------------------------#
