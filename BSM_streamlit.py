@@ -367,6 +367,10 @@ tr:hover {
 </style>
 """, unsafe_allow_html=True)
 
+# Display the final table first
+st.write('Final Data Table')
+st.dataframe(tablefinal_data.style.set_properties(**{'text-align': 'left'}))
+
 # Display DataFrames as tables in Streamlit with the formatted values
 st.write('Option Price Data Table')
 st.dataframe(table1_data.style.set_properties(**{'text-align': 'left'}))
@@ -414,6 +418,4 @@ tablefinal_data = pd.concat(
 # Reset index so 'Underlying Asset Price' becomes a column again
 tablefinal_data = tablefinal_data.reset_index()
 
-# Display the final table
-st.write('Final Data Table')
-st.dataframe(tablefinal_data.style.set_properties(**{'text-align': 'left'}))
+
