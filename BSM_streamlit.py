@@ -342,6 +342,16 @@ fig_bep_interactive = go.Figure(data=[bep_trace], layout=go.Layout(
 ))
 st.plotly_chart(fig_bep_interactive)
 
+#-----Collapse---#
+# Create a button to expand/collapse the section
+expand_button = st.button("Interactive Charts of The Greeks")
+
+# Check if the button is clicked
+if expand_button:
+    # If the button is clicked, display the contents within an expander
+    with st.expander("Interactive Charts of The Greeks"):
+# Create an expander for Delta chart
+        with st.expander("Delta Chart", expanded=False):
 # Delta Chart
 delta_trace = go.Scatter(
     x=spot_prices,
@@ -360,6 +370,8 @@ fig8 = go.Figure(data=[delta_trace], layout=go.Layout(
 ))
 st.plotly_chart(fig8)
 
+# Create an expander for Gamma chart
+        with st.expander("Gamma Chart", expanded=False):
 # Gamma Chart
 gamma_trace = go.Scatter(
     x=spot_prices,
@@ -378,6 +390,8 @@ fig9 = go.Figure(data=[gamma_trace], layout=go.Layout(
 ))
 st.plotly_chart(fig9)
 
+# Create an expander for Theta chart
+        with st.expander("Theta Chart", expanded=False):
 # Theta Chart
 theta_trace = go.Scatter(
     x=spot_prices,
@@ -396,6 +410,8 @@ fig10 = go.Figure(data=[theta_trace], layout=go.Layout(
 ))
 st.plotly_chart(fig10)
 
+# Create an expander for Vega chart
+        with st.expander("Vega Chart", expanded=False):
 # Vega Chart
 vega_trace = go.Scatter(
     x=spot_prices,
@@ -414,6 +430,8 @@ fig11 = go.Figure(data=[vega_trace], layout=go.Layout(
 ))
 st.plotly_chart(fig11)
 
+# Create an expander for Rho chart
+        with st.expander("Rho Chart", expanded=False):
 # Rho Chart
 rho_trace = go.Scatter(
     x=spot_prices,
