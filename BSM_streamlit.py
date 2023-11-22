@@ -167,31 +167,6 @@ remaining_minutes = max(minutes_to_expiry - time_decay_minutes, 0)
 # Convert time decay to a fraction of a year
 total_time_decay = (time_decay_days + (time_decay_hours / 24) + (time_decay_minutes / (24 * 60))) / 365
 
-# Adjust the time to expiry for the time decay
-adjusted_time_to_expiry = T - total_time_decay
-
-# Ensure adjusted time to expiry is not negative
-adjusted_time_to_expiry = max(adjusted_time_to_expiry, 0)
-
-# Use adjusted_time_to_expiry for further calculations, like recalculating option prices
-
-# Calculate the Greeks with the adjusted expiry time
-adjusted_deltas = [optionDelta(S_current, K, r, adjusted_time_to_expiry, sigma, type) for S_current in spot_prices]
-adjusted_gammas = [optionGamma(S_current, K, r, adjusted_time_to_expiry, sigma) for S_current in spot_prices]
-adjusted_thetas = [optionTheta(S_current, K, r, adjusted_time_to_expiry, sigma, type) for S_current in spot_prices]
-adjusted_vegas = [optionVega(S_current, K, r, adjusted_time_to_expiry, sigma) for S_current in spot_prices]
-adjusted_rhos = [optionRho(S_current, K, r, adjusted_time_to_expiry, sigma, type) for S_current in spot_prices]
-
-# Calculate option prices considering only Theta decay
-prices_after_theta_decay = [blackScholes(S_current, K, r, adjusted_time_to_expiry, sigma, type) - adjusted_thetas[i] for i, S_current in enumerate(spot_prices)]
-
-# Calculate option prices considering all Greeks (This is a simplified representation; in reality, the effect of each Greek is more complex and may not be additive)
-prices_after_all_greeks_decay = [
-    blackScholes(S_current, K, r, adjusted_time_to_expiry, sigma, type) - 
-    adjusted_thetas[i] - adjusted_deltas[i] - adjusted_gammas[i] - adjusted_vegas[i] - adjusted_rhos[i] 
-    for i, S_current in enumerate(spot_prices)
-]
-
 # Display summary of remaining time to expiry
 st.sidebar.write(f"Calculating Option Price in the next")
 st.sidebar.write(f"{remaining_days} day(s) {remaining_hours} hour(s) {remaining_minutes} minute(s)")
@@ -357,7 +332,7 @@ fig7 = go.Figure(data=[option_price_trace], layout=layout)
 # Display the figure in the Streamlit app
 st.plotly_chart(fig7)
 
-# After calculating the option prices and break-even prices -->> This is the "Option Price" value in the "Option Price Interactive" display chart
+# After calculating the option prices and break-even prices
 prices = [blackScholes(i, K, r, T, sigma, type) for i in spot_prices]
 break_even_prices = [K + p if type == "c" else K - p for p in prices]
 
