@@ -473,7 +473,7 @@ for K in strike_prices:
 # Create the P&L figure and add all the traces
 pnl_figure = go.Figure(data=pnl_traces)
 pnl_figure.update_layout(
-    title='P&L Interactive Chart',
+    title='P&L Interactive Chart (Same Underlying Asset Price at Option Purchase, Different Strike Prices',
     xaxis=dict(title='Underlying Asset Price'),
     yaxis=dict(title='Profit & Loss'),
     hovermode='closest'
