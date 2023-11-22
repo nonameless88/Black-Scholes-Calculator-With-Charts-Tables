@@ -594,16 +594,45 @@ st.write('Option Price Data Table')
 st.dataframe(table1_data.style.set_properties(**{'text-align': 'left'}))
 st.write('Break Even Price Data Table')
 st.dataframe(table_bep_data)
-st.write('Delta Data Table')
-st.dataframe(table2_data.style.set_properties(**{'text-align': 'left'}))
-st.write('Gamma Data Table')
-st.dataframe(table3_data.style.set_properties(**{'text-align': 'left'}))
-st.write('Theta Data Table')
-st.dataframe(table4_data.style.set_properties(**{'text-align': 'left'}))
-st.write('Vega Data Table')
-st.dataframe(table5_data.style.set_properties(**{'text-align': 'left'}))
-st.write('Rho Data Table')
-st.dataframe(table6_data.style.set_properties(**{'text-align': 'left'}))
+#-----Collapse---#
+# Create a button to expand/collapse the section
+expand_button = st.button("Data Tables for The Greeks")
+
+# Check if the button is clicked
+if expand_button:
+    # If the button is clicked, display the contents within an expander
+    with st.expander("Data Tables for The Greeks"):
+        # Create an expander for Delta table
+        with st.expander("Delta Data Table", expanded=False):
+            # Display Delta table
+            st.write("Delta Data Table:")
+            st.dataframe(table2_data.style.set_properties(**{'text-align': 'left'}))
+
+        # Create an expander for Gamma table
+        with st.expander("Gamma Data Table", expanded=False):
+            # Display Gamma table
+            st.write("Gamma Data Table:")
+            st.dataframe(table3_data.style.set_properties(**{'text-align': 'left'}))
+
+        # Create an expander for Theta table
+        with st.expander("Theta Data Table", expanded=False):
+            # Display Theta table
+            st.write("Theta Data Table:")
+            st.dataframe(table4_data.style.set_properties(**{'text-align': 'left'}))
+
+        # Create an expander for Vega table
+        with st.expander("Vega Data Table", expanded=False):
+            # Display Vega table
+            st.write("Vega Data Table:")
+            st.dataframe(table5_data.style.set_properties(**{'text-align': 'left'}))
+
+        # Create an expander for Rho table
+        with st.expander("Rho Data Table", expanded=False):
+            # Display Rho table
+            st.write("Rho Data Table:")
+            st.dataframe(table6_data.style.set_properties(**{'text-align': 'left'}))
+
+
 
 # Function to convert DataFrame to CSV for download
 def convert_df_to_csv(df):
