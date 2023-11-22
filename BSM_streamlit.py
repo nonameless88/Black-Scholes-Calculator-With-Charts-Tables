@@ -159,31 +159,10 @@ time_decay_hours = st.sidebar.number_input(
 time_decay_minutes = st.sidebar.number_input(
     "Time Decay (in minutes)", min_value=0, max_value=59, value=26, step=1)
 
-# Update the hover template for to include Option Price, Value Loss, and Theta value in  "Simplified Option Price After Decay at different Underlying Asset Price (Theta only)" and "Simplified Option Price After Decay at different Underlying Asset Price (All Greeks)" charts#
-hover_template_theta_only = (
-    '<i>Underlying Asset Price</i>: %{x:.2f}' +
-    '<br><b>Option Price After Theta Decay</b>: %{y:.3f}' +
-    '<br><b>Option Price</b>: %{customdata[0]:.3f}' +
-    '<br><b>Value Loss</b>: %{customdata[1]:.3f}' +
-    '<br><b>Theta Value</b>: %{text:.3f}<extra></extra>'
-)
-
-hover_template_all_greeks = (
-    '<i>Underlying Asset Price</i>: %{x:.2f}' +
-    '<br><b>Option Price After All Greeks Decay</b>: %{y:.3f}' +
-    '<br><b>Option Price</b>: %{customdata[0]:.3f}' +
-    '<br><b>Value Loss</b>: %{customdata[1]:.3f}' +
-    '<br><b>All Greeks Decay Value</b>: %{text:.3f}<extra></extra>'
-)
-
-
 # Calculate remaining time to expiry
 remaining_days = max(days_to_expiry - time_decay_days, 0)
 remaining_hours = max(hours_to_expiry - time_decay_hours, 0)
 remaining_minutes = max(minutes_to_expiry - time_decay_minutes, 0)
-
-# Display the remaining time after decay in the chart note#
-time_note = f"Calculating Option Price in the next {remaining_days} day(s) {remaining_hours} hour(s) {remaining_minutes} minute(s)"
 
 # Convert time decay to a fraction of a year
 total_time_decay = (time_decay_days + (time_decay_hours / 24) + (time_decay_minutes / (24 * 60))) / 365
@@ -195,14 +174,6 @@ adjusted_time_to_expiry = T - total_time_decay
 adjusted_time_to_expiry = max(adjusted_time_to_expiry, 0)
 
 # Use adjusted_time_to_expiry for further calculations, like recalculating option prices
-
-print("Spot prices:", spot_prices)
-print("Strike price (K):", K)
-print("Risk-free rate (r):", r)
-print("Adjusted time to expiry:", adjusted_time_to_expiry)
-print("Volatility (sigma):", sigma)
-print("Option type:", type)
-
 
 # Calculate the Greeks with the adjusted expiry time
 adjusted_deltas = [optionDelta(S_current, K, r, adjusted_time_to_expiry, sigma, type) for S_current in spot_prices]
@@ -225,7 +196,7 @@ prices_after_all_greeks_decay = [
 st.sidebar.write(f"Calculating Option Price in the next")
 st.sidebar.write(f"{remaining_days} day(s) {remaining_hours} hour(s) {remaining_minutes} minute(s)")
 
-#Important spot price array#
+
 spot_prices = [i for i in range(0, int(S)+50 + 1)]
 
 # First, calculate the option price at purchase for each strike price outside the loop
@@ -417,81 +388,6 @@ fig_bep_interactive = go.Figure(data=[bep_trace], layout=go.Layout(
     hovermode='closest'
 ))
 st.plotly_chart(fig_bep_interactive)
-
-
-# Calculate the remaining time after decay to display in the chart note
-remaining_days = days_to_expiry - time_decay_days
-remaining_hours = hours_to_expiry - time_decay_hours
-remaining_minutes = minutes_to_expiry - time_decay_minutes
-time_note = f"Calculating Option Price in the next {remaining_days} day(s) {remaining_hours} hour(s) {remaining_minutes} minute(s)"
-
-# Update the hover template to include Option Price, Value Loss, and Theta value
-hover_template_theta_only = (
-    '<i>Underlying Asset Price</i>: %{x:.2f}' +
-    '<br><b>Option Price After Theta Decay</b>: %{y:.3f}' +
-    '<br><b>Option Price</b>: %{customdata[0]:.3f}' +
-    '<br><b>Value Loss</b>: %{customdata[1]:.3f}' +
-    '<br><b>Theta Value</b>: %{text:.3f}<extra></extra>'
-)
-
-hover_template_all_greeks = (
-    '<i>Underlying Asset Price</i>: %{x:.2f}' +
-    '<br><b>Option Price After All Greeks Decay</b>: %{y:.3f}' +
-    '<br><b>Option Price</b>: %{customdata[0]:.3f}' +
-    '<br><b>Value Loss</b>: %{customdata[1]:.3f}' +
-    '<br><b>All Greeks Decay Value</b>: %{text:.3f}<extra></extra>'
-)
-
-
-
-#  "Simplified Option Price After Decay at different Underlying Asset Price (Theta only)" and "Simplified Option Price After Decay at different Underlying Asset Price (All Greeks)" interactive charts
-theta_only_trace = go.Scatter(
-    x=spot_prices,
-    y=prices_after_theta_decay,
-    mode='lines+markers',
-    name='Simplified Option Price After Decay (Theta only)',
-    hoverinfo='text',
-    hovertemplate=hover_template_theta_only,
-    text=adjusted_thetas,  # This should already be the theta values for each spot price
-    customdata=[(price, price - decayed_price) for price, decayed_price in zip(prices, prices_after_theta_decay)]
-)
-
-all_greeks_trace = go.Scatter(
-    x=spot_prices,
-    y=prices_after_all_greeks_decay,
-    mode='lines+markers',
-    name='Simplified Option Price After Decay (All Greeks)',
-    hoverinfo='text',
-    hovertemplate=hover_template_all_greeks,
-    text=[adjusted_thetas[i] + adjusted_deltas[i] + adjusted_gammas[i] + adjusted_vegas[i] + adjusted_rhos[i] for i in range(len(spot_prices))],
-    customdata=[(price, price - decayed_price) for price, decayed_price in zip(prices, prices_after_all_greeks_decay)]
-)
-
-# Create the figures with the traces and additional annotation for the note
-fig_Op_Price_theta_only = go.Figure(data=[theta_only_trace])
-fig_Op_Price_theta_only.update_layout(
-    title='Simplified Option Price After Decay at different Underlying Asset Price (Theta only)',
-    annotations=[dict(xref='paper', yref='paper', x=0.5, y=-0.2, showarrow=False, text=time_note)],
-    xaxis=dict(title='Underlying Asset Price'),
-    yaxis=dict(title='Option Price After Decay'),
-    hovermode='closest'
-)
-
-fig_Op_Price_all_greeks = go.Figure(data=[all_greeks_trace])
-fig_Op_Price_all_greeks.update_layout(
-    title='Simplified Option Price After Decay at different Underlying Asset Price (All Greeks)',
-    annotations=[dict(xref='paper', yref='paper', x=0.5, y=-0.2, showarrow=False, text=time_note)],
-    xaxis=dict(title='Underlying Asset Price'),
-    yaxis=dict(title='Option Price After Decay'),
-    hovermode='closest'
-)
-
-# Display the figures in the Streamlit app
-st.plotly_chart(fig_Op_Price_theta_only)
-st.plotly_chart(fig_Op_Price_all_greeks)
-
-
-
 
 #-----Collapse---#
 # Create a button to expand/collapse the section
@@ -892,4 +788,3 @@ st.download_button(
     file_name=f'PNL_Data_Table_{option_type}_{central_strike}_{num_strikes*2+1}_{strike_price_step}.csv',
     mime='text/csv',
 )
-
