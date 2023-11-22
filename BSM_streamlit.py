@@ -1,3 +1,4 @@
+pip install --upgrade streamlit
 import pandas as pd
 import plotly.graph_objs as go
 import numpy as np
