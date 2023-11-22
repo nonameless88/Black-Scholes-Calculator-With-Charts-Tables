@@ -265,7 +265,7 @@ col2.metric("Rho", f"{rho:.5f}")
 
 #Add collapse header#
 # Create a button to expand/collapse the section
-expand_button = st.button("Toggle Visualization of the Greeks")
+expand_button = st.button("Click to get Visualization of the Greeks & Price - No Interactive")
 
 # Check if the button is clicked
 if expand_button:
