@@ -437,7 +437,7 @@ for K in strike_prices:
             name=f"P&L for Strike {K}",
             hoverinfo='text',
             text=[
-                f'Strike Price: {K}<br>Underlying Price: {Si}<br>Option Price at Purchase: {option_price_at_purchase:.2f}<br>P&L: {pnl:.2f}'
+                f'Strike Price: {K}<br>Underlying Price: {Si}<br>Option Purchase Price: {initial_price:.2f}<br>Option Price at Purchase: {option_price_at_purchase:.2f}<br>P&L: {pnl:.2f}'
                 for Si, pnl in zip(spot_prices, pnl_data[K])
             ],
             hovertemplate='%{text}<extra></extra>',
