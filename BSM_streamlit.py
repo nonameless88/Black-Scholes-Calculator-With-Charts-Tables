@@ -263,10 +263,25 @@ col1, col2 = st.columns(2)
 col1.metric("Vega", f"{vega:.5f}")
 col2.metric("Rho", f"{rho:.5f}") 
 
+st.header("")
+st.markdown("<h3 align='center'>Visualization of the Greeks</h3>", unsafe_allow_html=True)
+st.header("")
+st.pyplot(fig1)
+st.pyplot(fig_bep)
+st.pyplot(fig2)
+st.pyplot(fig3)
+st.pyplot(fig4)
+st.pyplot(fig5)
+st.pyplot(fig6)
+
 #Add collapse header#
-# Create an expander for the "Visualization of the Greeks" section
-with st.beta_expander("Visualization of the Greeks", expanded=False):  # Set expanded=False to initially collapse it
-    st.header("")
+# Create a button to expand/collapse the section
+expand_button = st.button("Toggle Visualization of the Greeks")
+
+# Check if the button is clicked
+if expand_button:
+    # If the button is clicked, display the contents
+    st.header("Visualization of the Greeks")
     st.pyplot(fig1)
     st.pyplot(fig_bep)
     st.pyplot(fig2)
