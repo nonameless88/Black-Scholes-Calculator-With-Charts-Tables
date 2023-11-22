@@ -196,6 +196,14 @@ adjusted_time_to_expiry = max(adjusted_time_to_expiry, 0)
 
 # Use adjusted_time_to_expiry for further calculations, like recalculating option prices
 
+print("Spot prices:", spot_prices)
+print("Strike price (K):", K)
+print("Risk-free rate (r):", r)
+print("Adjusted time to expiry:", adjusted_time_to_expiry)
+print("Volatility (sigma):", sigma)
+print("Option type:", type)
+
+
 # Calculate the Greeks with the adjusted expiry time
 adjusted_deltas = [optionDelta(S_current, K, r, adjusted_time_to_expiry, sigma, type) for S_current in spot_prices]
 adjusted_gammas = [optionGamma(S_current, K, r, adjusted_time_to_expiry, sigma) for S_current in spot_prices]
