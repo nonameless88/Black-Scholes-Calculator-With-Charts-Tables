@@ -151,6 +151,23 @@ T = total_days_to_expiry/365
 st.sidebar.text(f"Time to Expiry (years): T={T:.5f}")
 st.sidebar.text(f"Volatility (in percent): {sigma * 100:.2f}%")
 
+# New input boxes for Time Decay
+time_decay_days = st.sidebar.number_input(
+    "Time Decay (in days)", min_value=0, max_value=365, value=1, step=1)
+time_decay_hours = st.sidebar.number_input(
+    "Time Decay (in hours)", min_value=0, max_value=23, value=21, step=1)
+time_decay_minutes = st.sidebar.number_input(
+    "Time Decay (in minutes)", min_value=0, max_value=59, value=26, step=1)
+
+# Calculate remaining time to expiry
+remaining_days = max(days_to_expiry - time_decay_days, 0)
+remaining_hours = max(hours_to_expiry - time_decay_hours, 0)
+remaining_minutes = max(minutes_to_expiry - time_decay_minutes, 0)
+
+# Display summary of remaining time to expiry
+st.sidebar.text(f"Calculating Option Price in the next {remaining_days} day(s) "
+                f"{remaining_hours} hour(s) {remaining_minutes} minute(s)")
+
 spot_prices = [i for i in range(0, int(S)+50 + 1)]
 
 # First, calculate the option price at purchase for each strike price outside the loop
