@@ -350,105 +350,106 @@ expand_button = st.button("Interactive Charts of The Greeks")
 if expand_button:
     # If the button is clicked, display the contents within an expander
     with st.expander("Interactive Charts of The Greeks"):
-# Create an expander for Delta chart
+        # Create an expander for Delta chart
         with st.expander("Delta Chart", expanded=False):
-# Delta Chart
-delta_trace = go.Scatter(
-    x=spot_prices,
-    y=deltas,
-    mode='lines+markers',
-    name='Delta',
-    hoverinfo='text',
-    hovertemplate='<i>Underlying Asset Price</i>: %{x:.2f}'+
-                  '<br><b>Delta</b>: %{y:.10f}<extra></extra>',
-)
-fig8 = go.Figure(data=[delta_trace], layout=go.Layout(
-    title='Delta Interactive Chart',
-    xaxis=dict(title='Underlying Asset Price'),
-    yaxis=dict(title='Delta'),
-    hovermode='closest'
-))
-st.plotly_chart(fig8)
+            # Delta Chart
+            delta_trace = go.Scatter(
+                x=spot_prices,
+                y=deltas,
+                mode='lines+markers',
+                name='Delta',
+                hoverinfo='text',
+                hovertemplate='<i>Underlying Asset Price</i>: %{x:.2f}'+
+                              '<br><b>Delta</b>: %{y:.10f}<extra></extra>',
+            )
+            fig8 = go.Figure(data=[delta_trace], layout=go.Layout(
+                title='Delta Interactive Chart',
+                xaxis=dict(title='Underlying Asset Price'),
+                yaxis=dict(title='Delta'),
+                hovermode='closest'
+            ))
+            st.plotly_chart(fig8)
 
-# Create an expander for Gamma chart
+        # Create an expander for Gamma chart
         with st.expander("Gamma Chart", expanded=False):
-# Gamma Chart
-gamma_trace = go.Scatter(
-    x=spot_prices,
-    y=gammas,
-    mode='lines+markers',
-    name='Gamma',
-    hoverinfo='text',
-    hovertemplate='<i>Underlying Asset Price</i>: %{x:.2f}'+
-                  '<br><b>Gamma</b>: %{y:.10f}<extra></extra>',
-)
-fig9 = go.Figure(data=[gamma_trace], layout=go.Layout(
-    title='Gamma Interactive Chart',
-    xaxis=dict(title='Underlying Asset Price'),
-    yaxis=dict(title='Gamma'),
-    hovermode='closest'
-))
-st.plotly_chart(fig9)
+            # Gamma Chart
+            gamma_trace = go.Scatter(
+                x=spot_prices,
+                y=gammas,
+                mode='lines+markers',
+                name='Gamma',
+                hoverinfo='text',
+                hovertemplate='<i>Underlying Asset Price</i>: %{x:.2f}'+
+                              '<br><b>Gamma</b>: %{y:.10f}<extra></extra>',
+            )
+            fig9 = go.Figure(data=[gamma_trace], layout=go.Layout(
+                title='Gamma Interactive Chart',
+                xaxis=dict(title='Underlying Asset Price'),
+                yaxis=dict(title='Gamma'),
+                hovermode='closest'
+            ))
+            st.plotly_chart(fig9)
 
-# Create an expander for Theta chart
+        # Create an expander for Theta chart
         with st.expander("Theta Chart", expanded=False):
-# Theta Chart
-theta_trace = go.Scatter(
-    x=spot_prices,
-    y=thetas,
-    mode='lines+markers',
-    name='Theta',
-    hoverinfo='text',
-    hovertemplate='<i>Underlying Asset Price</i>: %{x:.2f}'+
-                  '<br><b>Theta</b>: %{y:.10f}<extra></extra>',
-)
-fig10 = go.Figure(data=[theta_trace], layout=go.Layout(
-    title='Theta Interactive Chart',
-    xaxis=dict(title='Underlying Asset Price'),
-    yaxis=dict(title='Theta'),
-    hovermode='closest'
-))
-st.plotly_chart(fig10)
+            # Theta Chart
+            theta_trace = go.Scatter(
+                x=spot_prices,
+                y=thetas,
+                mode='lines+markers',
+                name='Theta',
+                hoverinfo='text',
+                hovertemplate='<i>Underlying Asset Price</i>: %{x:.2f}'+
+                              '<br><b>Theta</b>: %{y:.10f}<extra></extra>',
+            )
+            fig10 = go.Figure(data=[theta_trace], layout=go.Layout(
+                title='Theta Interactive Chart',
+                xaxis=dict(title='Underlying Asset Price'),
+                yaxis=dict(title='Theta'),
+                hovermode='closest'
+            ))
+            st.plotly_chart(fig10)
 
-# Create an expander for Vega chart
+        # Create an expander for Vega chart
         with st.expander("Vega Chart", expanded=False):
-# Vega Chart
-vega_trace = go.Scatter(
-    x=spot_prices,
-    y=vegas,
-    mode='lines+markers',
-    name='Vega',
-    hoverinfo='text',
-    hovertemplate='<i>Underlying Asset Price</i>: %{x:.2f}'+
-                  '<br><b>Vega</b>: %{y:.10f}<extra></extra>',
-)
-fig11 = go.Figure(data=[vega_trace], layout=go.Layout(
-    title='Vega Interactive Chart',
-    xaxis=dict(title='Underlying Asset Price'),
-    yaxis=dict(title='Vega'),
-    hovermode='closest'
-))
-st.plotly_chart(fig11)
+            # Vega Chart
+            vega_trace = go.Scatter(
+                x=spot_prices,
+                y=vegas,
+                mode='lines+markers',
+                name='Vega',
+                hoverinfo='text',
+                hovertemplate='<i>Underlying Asset Price</i>: %{x:.2f}'+
+                              '<br><b>Vega</b>: %{y:.10f}<extra></extra>',
+            )
+            fig11 = go.Figure(data=[vega_trace], layout=go.Layout(
+                title='Vega Interactive Chart',
+                xaxis=dict(title='Underlying Asset Price'),
+                yaxis=dict(title='Vega'),
+                hovermode='closest'
+            ))
+            st.plotly_chart(fig11)
 
-# Create an expander for Rho chart
+        # Create an expander for Rho chart
         with st.expander("Rho Chart", expanded=False):
-# Rho Chart
-rho_trace = go.Scatter(
-    x=spot_prices,
-    y=rhos,
-    mode='lines+markers',
-    name='Rho',
-    hoverinfo='text',
-    hovertemplate='<i>Underlying Asset Price</i>: %{x:.2f}'+
-                  '<br><b>Rho</b>: %{y:.10f}<extra></extra>',
-)
-fig12 = go.Figure(data=[rho_trace], layout=go.Layout(
-    title='Rho Interactive Chart',
-    xaxis=dict(title='Underlying Asset Price'),
-    yaxis=dict(title='Rho'),
-    hovermode='closest'
-))
-st.plotly_chart(fig12)
+            # Rho Chart
+            rho_trace = go.Scatter(
+                x=spot_prices,
+                y=rhos,
+                mode='lines+markers',
+                name='Rho',
+                hoverinfo='text',
+                hovertemplate='<i>Underlying Asset Price</i>: %{x:.2f}'+
+                              '<br><b>Rho</b>: %{y:.10f}<extra></extra>',
+            )
+            fig12 = go.Figure(data=[rho_trace], layout=go.Layout(
+                title='Rho Interactive Chart',
+                xaxis=dict(title='Underlying Asset Price'),
+                yaxis=dict(title='Rho'),
+                hovermode='closest'
+            ))
+            st.plotly_chart(fig12)
+
 
 # New code block for creating P&L chart
 pnl_traces = []  # List to store all P&L traces
