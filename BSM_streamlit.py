@@ -274,6 +274,20 @@ st.pyplot(fig4)
 st.pyplot(fig5)
 st.pyplot(fig6)
 
+#Add collapse header#
+# Create an expander for the "Visualization of the Greeks" section
+with st.beta_expander("Visualization of the Greeks", expanded=False):  # Set expanded=False to initially collapse it
+    st.header("")
+    st.pyplot(fig1)
+    st.pyplot(fig_bep)
+    st.pyplot(fig2)
+    st.pyplot(fig3)
+    st.pyplot(fig4)
+    st.pyplot(fig5)
+    st.pyplot(fig6)
+
+
+
 #---------------------------------------------------------#
 # Interactive charts using Plotly
 #---------------------------------------------------------#
