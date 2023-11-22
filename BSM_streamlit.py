@@ -164,6 +164,9 @@ remaining_days = max(days_to_expiry - time_decay_days, 0)
 remaining_hours = max(hours_to_expiry - time_decay_hours, 0)
 remaining_minutes = max(minutes_to_expiry - time_decay_minutes, 0)
 
+# Convert time decay to a fraction of a year
+total_time_decay = (time_decay_days + (time_decay_hours / 24) + (time_decay_minutes / (24 * 60))) / 365
+
 # Display summary of remaining time to expiry
 st.sidebar.write(f"Calculating Option Price in the next")
 st.sidebar.write(f"{remaining_days} day(s) {remaining_hours} hour(s) {remaining_minutes} minute(s)")
