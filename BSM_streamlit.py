@@ -1,4 +1,3 @@
-pip install --upgrade streamlit
 import pandas as pd
 import plotly.graph_objs as go
 import numpy as np
@@ -263,17 +262,6 @@ col1.metric("Theta", f"{theta:.3f}")
 col1, col2 = st.columns(2)
 col1.metric("Vega", f"{vega:.5f}")
 col2.metric("Rho", f"{rho:.5f}") 
-
-st.header("")
-st.markdown("<h3 align='center'>Visualization of the Greeks</h3>", unsafe_allow_html=True)
-st.header("")
-st.pyplot(fig1)
-st.pyplot(fig_bep)
-st.pyplot(fig2)
-st.pyplot(fig3)
-st.pyplot(fig4)
-st.pyplot(fig5)
-st.pyplot(fig6)
 
 #Add collapse header#
 # Create an expander for the "Visualization of the Greeks" section
