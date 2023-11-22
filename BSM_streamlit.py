@@ -165,8 +165,8 @@ remaining_hours = max(hours_to_expiry - time_decay_hours, 0)
 remaining_minutes = max(minutes_to_expiry - time_decay_minutes, 0)
 
 # Display summary of remaining time to expiry
-st.sidebar.write(f"Calculating Option Price in the next {remaining_days} day(s)")
-st.sidebar.write(f"{remaining_hours} hour(s) {remaining_minutes} minute(s)")
+st.sidebar.write(f"Calculating Option Price in the next")
+st.sidebar.write(f"{remaining_days} day(s) {remaining_hours} hour(s) {remaining_minutes} minute(s)")
 
 
 spot_prices = [i for i in range(0, int(S)+50 + 1)]
