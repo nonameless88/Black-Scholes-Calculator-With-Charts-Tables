@@ -449,7 +449,7 @@ if expand_button:
                 hovermode='closest'
             ))
             st.plotly_chart(fig12)
-
+#---End Collapse--#
 
 # New code block for creating P&L chart
 pnl_traces = []  # List to store all P&L traces
